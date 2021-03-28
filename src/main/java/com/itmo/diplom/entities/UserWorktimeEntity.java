@@ -9,23 +9,25 @@ import java.sql.Time;
 @Data
 @NoArgsConstructor
 @Entity
-@IdClass(UserWorktimeEntity.class)
+//@IdClass(UserWorktimeEntity.class)
 @Table(name = "user_worktime", schema = "diplom")
 public class UserWorktimeEntity implements Serializable {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
+//    @Id
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
-    private int userId;
+    private Integer id;
     @Basic
     @Column(name = "start_time", nullable = false)
     private Time startTime;
     @Basic
     @Column(name = "end_time", nullable = false)
     private Time endTime;
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private UserEntity userByUserId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", nullable = false)
+    private UserEntity userok;
 
 }

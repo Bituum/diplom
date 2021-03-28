@@ -16,7 +16,7 @@ public class UserPropertiesEntity implements Serializable {
     private Integer id;
     @Id
     @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    private int userId;
     @Basic
     @Column(name = "name", nullable = false, length = 255)
     private String name;

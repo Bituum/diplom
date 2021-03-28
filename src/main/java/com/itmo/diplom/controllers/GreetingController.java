@@ -5,17 +5,20 @@ import com.itmo.diplom.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
 public class GreetingController {
-    @Autowired
-    private UserServiceImpl userService;
+    //@Autowired
+    //private UserServiceImpl userService;
 
-    @GetMapping("/hello")
+    @GetMapping("/greeting")
     public String greeting(){
 
-        return "greeting";
+        return "login/greeting";
+    }
+    @GetMapping("/")
+    public String root(){
+
+        return "login/greeting";
     }
 }

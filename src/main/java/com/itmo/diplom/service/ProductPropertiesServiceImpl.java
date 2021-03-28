@@ -4,10 +4,11 @@ import com.itmo.diplom.DAO.ProductPropertiesRepository;
 import com.itmo.diplom.entities.OtherThingEntity;
 import com.itmo.diplom.entities.ProductPropertiesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProductPropertiesServiceImpl implements ProductPropertiesService{
     @Autowired
     private ProductPropertiesRepository productPropertiesRepository;

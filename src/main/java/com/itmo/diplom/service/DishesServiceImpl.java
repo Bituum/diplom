@@ -4,10 +4,11 @@ import com.itmo.diplom.DAO.DishesRepository;
 import com.itmo.diplom.entities.DishesEntity;
 import com.itmo.diplom.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class DishesServiceImpl implements DishesService{
     @Autowired
     private DishesRepository dishesRepository;

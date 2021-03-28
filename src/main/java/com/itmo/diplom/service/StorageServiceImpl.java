@@ -4,10 +4,11 @@ import com.itmo.diplom.DAO.StorageRepository;
 import com.itmo.diplom.entities.MenuEntity;
 import com.itmo.diplom.entities.StorageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class StorageServiceImpl implements StorageService {
     @Autowired
     private StorageRepository storageRepository;
