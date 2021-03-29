@@ -1,24 +1,37 @@
 package com.itmo.diplom.config;
 
+import com.itmo.diplom.service.UserDetailsServiceImpl;
 import com.itmo.diplom.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserServiceImpl userService;
+    private UserDetailsServiceImpl userService;
+
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider  auth = new DaoAuthenticationProvider();;
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(bCryptPasswordEncoder());
+        return auth;
+    }
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -27,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.authenticationProvider(authenticationProvider());
+
     }
 
 
@@ -37,9 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/greeting").hasRole("USER")
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/greeting").hasAuthority("USER")
+                .antMatchers("/", "/resources/**", "/nullmodel").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

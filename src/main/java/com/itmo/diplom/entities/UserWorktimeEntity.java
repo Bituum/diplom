@@ -17,7 +17,6 @@ public class UserWorktimeEntity implements Serializable {
 //    private Integer id;
 //    @Id
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private Integer id;
     @Basic
@@ -26,8 +25,9 @@ public class UserWorktimeEntity implements Serializable {
     @Basic
     @Column(name = "end_time", nullable = false)
     private Time endTime;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "user_id")
     private UserEntity userok;
 
 }

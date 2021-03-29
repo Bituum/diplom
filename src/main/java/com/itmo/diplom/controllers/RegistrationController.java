@@ -1,5 +1,6 @@
 package com.itmo.diplom.controllers;
 
+
 import com.itmo.diplom.entities.UserEntity;
 import com.itmo.diplom.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration(Model model){
-        model.addAttribute("UserForm", new UserEntity());
+        model.addAttribute("userForm", new UserEntity());
         return "starter/registration";
     }
 
@@ -29,8 +30,11 @@ public class RegistrationController {
         if(result.hasErrors()){
             return "starter/registration";
         }
+        if(userForm == null){
+            return "redirect:/nullmodel";
+        }
         if(!userService.save(userForm)){
-            model.addAttribute("usernameError", "Username this that login is existing");
+            //model.addAttribute("usernameError", "Username this that login is existing");
             return "starter/registration";
         }
         return "redirect:/main";
