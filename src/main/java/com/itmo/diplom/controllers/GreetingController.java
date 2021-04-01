@@ -14,11 +14,11 @@ public class GreetingController {
     @GetMapping("/greeting")
     public String greeting(){
 
-        return "login/greeting";
+        return "starter/greeting";
     }
     @GetMapping("/")
     public String root(){
 
-        return "login/greeting";
+        return "starter/greeting";
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -25,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userService;
 
+
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider  auth = new DaoAuthenticationProvider();;
         auth.setUserDetailsService(userService);
@@ -32,16 +34,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return auth;
     }
 
-
+    //encoder
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    //auth provider
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
 
+    }
+    //redirect if roles are different
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleAuthentificationSuccessHandler();
     }
 
 
@@ -57,8 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                /*.loginPage("/login")*/
-                .defaultSuccessUrl("/greeting")
+                .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
                 .and()
                 .logout().permitAll()
