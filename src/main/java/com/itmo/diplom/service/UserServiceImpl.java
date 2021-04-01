@@ -33,21 +33,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(UserEntity user) {
-//        BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
-//        Optional<UserEntity> userfromBD = userRepository.findByLogin(user.getUsername());
-//        UserEntity tmpUser = null;
-//        System.out.println(userfromBD.toString());
-//        if (userfromBD.isEmpty()){
-//            tmpUser = user;
-//            tmpUser.setRoles(Collections.singleton(new Role(1, "USER")));
-//            tmpUser.setPasswd(bCryptPasswordEncoder.encode(tmpUser.getPassword()));
-//            userRepository.save(tmpUser);
-//            return true;
-//        }
-//        else{
-//            System.out.println("This user is already created");
-//            throw new IllegalArgumentException();
-//        }
         user.setPasswd(bCryptPasswordEncoder.encode(user.getPasswd()));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roleRepository.getOne(1));
@@ -69,21 +54,11 @@ public class UserServiceImpl implements UserService {
         return tmpUser;
     }
 
+
     @Override
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-//        return userRepository.findByLogin(s).orElseThrow(() -> new UsernameNotFoundException("User not present"));
-//    }
-
-//    @Override
-//    public UserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return userRepository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("User not present"));
-//    }
-
 
 
 }

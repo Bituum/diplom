@@ -30,9 +30,6 @@ public class RegistrationController {
         if(result.hasErrors()){
             return "starter/registration";
         }
-        if(userForm == null){
-            return "redirect:/nullmodel";
-        }
         if(!userService.save(userForm)){
             //model.addAttribute("usernameError", "Username this that login is existing");
             return "starter/registration";

@@ -1,0 +1,17 @@
+.loop{
+    position: relative;
+    top: 50%;
+    font-size: 20px;
+    text-align: left;
+    padding-top: 15px;
+}
+
+#deleteButton{
+    position: absolute;
+    right: 20%
+}
+
+#editButton{
+    position: absolute;
+    right: 12%;
+}

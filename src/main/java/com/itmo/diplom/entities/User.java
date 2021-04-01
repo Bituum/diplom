@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 @Data
 @NoArgsConstructor
+///<-----------NO_USAGE_IN_THE_CODE-------------->///
 public class User implements UserDetails {
     private UserEntity user;
     @Override
