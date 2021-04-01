@@ -1,4 +1,4 @@
-package com.itmo.diplom.config;
+package com.itmo.diplom.utils;
 
 import aj.org.objectweb.asm.Handle;
 

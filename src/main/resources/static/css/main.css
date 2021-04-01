@@ -1,17 +1,27 @@
-.loop{
-    position: relative;
-    top: 50%;
-    font-size: 20px;
-    text-align: left;
-    padding-top: 15px;
-}
-
 #deleteButton{
-    position: absolute;
-    right: 20%
+    top: 5%;
+    float: right;
+    position: relative;
+    margin-right: 10px;
 }
 
 #editButton{
+    top: 5%;
+    float: right;
+    position: relative;
+    margin-right: 10px;
+}
+
+.login_panel{
+    margin-left: 36%;
+}
+
+#starter{
+    background-color: #212529;
+}
+
+#sback{
     position: absolute;
-    right: 12%;
+    top: 1%;
+    right: 1%;
 }

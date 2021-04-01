@@ -34,7 +34,7 @@ public class RegistrationController {
             //model.addAttribute("usernameError", "Username this that login is existing");
             return "starter/registration";
         }
-        return "redirect:/main";
+        return "redirect:/";
 
     }
 

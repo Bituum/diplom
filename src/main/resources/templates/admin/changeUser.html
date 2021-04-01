@@ -7,18 +7,16 @@
     <title>Change User</title>
 </head>
 <body>
-<h1>Change user</h1>
     <form th:action="@{/admin/users/edit/{id}(id=${id})}" th:object="${userForm}" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <div th:replace="fragments/header :: headerFragment"></div>
-
-             <label class="login-label">
-                 <input class="login-label" type="text" th:field="*{login}"/>
-             </label>
-            <label class="password-label">
-                 <input class="password-label" type="text" th:field="*{passwd}"/>
-            </label>
-            <input type="submit" value="Submit"/>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" th:field="*{login}">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Изменить</button>
+                    <input type="text" class="form-control" placeholder="Password" aria-label="Password" th:field="*{passwd}">
+                </div>
+            </div>
        </div>
 </form>
 </body>

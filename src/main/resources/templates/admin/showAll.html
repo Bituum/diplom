@@ -8,16 +8,38 @@
 </head>
 <body>
     <div th:replace="fragments/header :: headerFragment"></div>
-    <div th:each="user : ${users}" class="loop">
-        <td th:text="${user.login}"></td>
-        <td th:text="${user.getAuthorities()}"></td>
-
-        <form th:method="POST"
-              th:action="@{/admin/users/delete/{id}(id=${user.getId()})}" style="display: inline">
-            <button type="submit" class="btn btn-outline-danger" id="deleteButton">Удалить</button>
-        </form>
-        <a th:href="@{/admin/users/edit/{id}(id=${user.getId()})}" type="button" class="btn btn-outline-warning" id="editButton">Изменить</a>
+    <div style="position: absolute; background-color: #212529; top: 1%; right:15%">
+        <a type="button" class="btn btn-outline-light" aria-disabled="true" th:href="@{/admin/users/registration}">Создать нового пользователя</a>
     </div>
-
+        <table class="table">
+            <thead  class="table-dark">
+               <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">User</th>
+                   <th scope="col">Role</th>
+                   <th scope="col"></th>
+                   <th scope="col"></th>
+              </tr>
+            </thead>
+            <div th:each="user : ${users}">
+            <tbody>
+                <tr>
+                    <th scope="row" th:text="${user.getId()}">1</th>
+                    <td th:text="${user.login}">login</td>
+                    <td th:text="${user.getAuthorities()}">role</td>
+                    <td>
+                        <a type="button" class="btn btn-outline-info" th:href="@{/admin/users/{id}(id=${user.getId()})}">Подбробнее</a>
+                    </td>
+                    <td>
+                        <form th:method="POST"
+                              th:action="@{/admin/users/delete/{id}(id=${user.getId()})}" style="display: inline">
+                            <button type="submit" class="btn btn-outline-danger" id="deleteButton">Удалить</button>
+                        </form>
+                        <a th:href="@{/admin/users/edit/{id}(id=${user.getId()})}" type="button" class="btn btn-outline-warning" id="editButton">Изменить</a>
+                    </td>
+                </tr>
+            </tbody>
+            </div>
+    </table>
 </body>
 </html>

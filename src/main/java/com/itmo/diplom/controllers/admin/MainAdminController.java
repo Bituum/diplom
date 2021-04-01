@@ -59,5 +59,23 @@ public class MainAdminController {
         userService.deleteUser(userId);
         return "redirect:/admin/users/all";
     }
+    @GetMapping("/admin/users/registration")
+    public String registration(Model model){
+        model.addAttribute("userForm", new UserEntity());
+        return "admin/registration";
+    }
+
+    @PostMapping("/admin/users/registration")
+    public String addNewUser(@ModelAttribute("userForm") @Valid UserEntity userForm, Model model, BindingResult result){
+        if(result.hasErrors()){
+            return "starter/registration";
+        }
+        if(!userService.save(userForm)){
+            //model.addAttribute("usernameError", "Username this that login is existing");
+            return "starter/registration";
+        }
+        return "redirect:/admin/users/all";
+
+    }
 
 }
