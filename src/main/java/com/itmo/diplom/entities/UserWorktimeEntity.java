@@ -6,18 +6,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 //@IdClass(UserWorktimeEntity.class)
 @Table(name = "user_worktime", schema = "diplom")
-public class UserWorktimeEntity implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-//    @Id
+public class UserWorktimeEntity{
+
     @Id
-    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Integer id;
     @Basic
     @Column(name = "start_time", nullable = false)
@@ -25,7 +24,7 @@ public class UserWorktimeEntity implements Serializable {
     @Basic
     @Column(name = "end_time", nullable = false)
     private Time endTime;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
     private UserEntity userok;

@@ -1,6 +1,8 @@
 package com.itmo.diplom.entities;
 
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +47,10 @@ public class UserEntity implements UserDetails {
     @OneToOne(mappedBy = "userok", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private UserWorktimeEntity userWorktime;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private UserPropertiesEntity userPropertiesEntity;
 
 
     @Override
