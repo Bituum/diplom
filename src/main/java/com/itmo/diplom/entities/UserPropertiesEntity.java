@@ -18,7 +18,6 @@ public class UserPropertiesEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;*/
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Integer userId;
@@ -38,7 +37,7 @@ public class UserPropertiesEntity{
     @Column(name = "salary", nullable = true)
     private Integer salary;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     @JoinColumn(name = "user_id")
     private UserEntity user;

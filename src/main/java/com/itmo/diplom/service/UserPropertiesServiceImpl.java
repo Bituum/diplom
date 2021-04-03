@@ -27,11 +27,14 @@ public class UserPropertiesServiceImpl implements UserPropertiesService{
     public boolean save(UserPropertiesEntity userProperties) {
         UserEntity tmpUser = new UserEntity();
         Optional<UserEntity> user = userRepository.findById(userProperties.getUserId());
+        //находим юзера у юзеррепозитория
         if(user.isPresent()){
             tmpUser = user.get();
+            //достаём
+            tmpUser.setUserPropertiesEntity(userProperties);
+            //ставим у юзера его проперти
             userProperties.setUser(tmpUser);
-            ``tmpUser.setUserPropertiesEntity(userProperties);
-
+            //ставим у проперти юзера иначе ексепшн
 
             userPropertiesRepository.save(userProperties);
         }else {
