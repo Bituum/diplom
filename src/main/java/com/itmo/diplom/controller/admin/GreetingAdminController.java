@@ -1,4 +1,4 @@
-package com.itmo.diplom.rest.admin;
+package com.itmo.diplom.controller.admin;
 
 import com.itmo.diplom.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

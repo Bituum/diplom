@@ -1,4 +1,4 @@
-package com.itmo.diplom.rest;
+package com.itmo.diplom.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

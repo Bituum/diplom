@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "com.itmo.diplom.repository",
         "com.itmo.diplom.service",
         "com.itmo.diplom.config",
-        "com.itmo.diplom.rest",
+        "com.itmo.diplom.controller",
         "com.itmo.diplom.entity"})
 public class DiplomApplication {
 

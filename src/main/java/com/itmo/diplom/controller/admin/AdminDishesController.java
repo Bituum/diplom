@@ -1,4 +1,4 @@
-package com.itmo.diplom.rest.admin;
+package com.itmo.diplom.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
