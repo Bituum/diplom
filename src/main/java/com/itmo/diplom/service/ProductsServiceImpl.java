@@ -1,8 +1,7 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.ProductsRepository;
-import com.itmo.diplom.entities.ProductPropertiesEntity;
-import com.itmo.diplom.entities.ProductsEntity;
+import com.itmo.diplom.repository.ProductsRepository;
+import com.itmo.diplom.entity.ProductsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

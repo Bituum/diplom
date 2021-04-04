@@ -1,9 +1,9 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.UserPropertiesRepository;
-import com.itmo.diplom.DAO.UserRepository;
-import com.itmo.diplom.entities.UserEntity;
-import com.itmo.diplom.entities.UserPropertiesEntity;
+import com.itmo.diplom.entity.UserEntity;
+import com.itmo.diplom.entity.UserPropertiesEntity;
+import com.itmo.diplom.repository.UserPropertiesRepository;
+import com.itmo.diplom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,7 @@ public class UserPropertiesServiceImpl implements UserPropertiesService{
         UserEntity tmpUser = new UserEntity();
         Optional<UserEntity> user = userRepository.findById(userProperties.getUserId());
         //находим юзера у юзеррепозитория
+
         if(user.isPresent()){
             tmpUser = user.get();
             //достаём

@@ -1,13 +1,12 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.DishesRepository;
-import com.itmo.diplom.entities.DishesEntity;
-import com.itmo.diplom.entities.UserEntity;
+import com.itmo.diplom.repository.DishesRepository;
+import com.itmo.diplom.entity.DishesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class DishesServiceImpl implements DishesService{
     @Autowired
@@ -25,15 +24,9 @@ public class DishesServiceImpl implements DishesService{
 
     @Override
     public DishesEntity getDishesEntity(int id) {
-        DishesEntity tmpDish = null;
-        Optional<DishesEntity> optional = dishesRepository.findById(id);
-        if(optional.isPresent()){
-            tmpDish = optional.get();
-        }else {
-            System.out.println("!!!!!Optional is empty!!!!!");
-            throw new IllegalArgumentException();
-        }
-        return tmpDish;
+        return dishesRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Not found")
+        );
     }
 
     @Override

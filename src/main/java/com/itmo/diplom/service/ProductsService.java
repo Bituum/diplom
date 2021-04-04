@@ -1,7 +1,6 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.entities.ProductsEntity;
-import com.itmo.diplom.entities.StorageEntity;
+import com.itmo.diplom.entity.ProductsEntity;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package com.itmo.diplom.service;
 
 
-import com.itmo.diplom.entities.UserEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.itmo.diplom.entity.UserEntity;
 
 import java.util.List;
 

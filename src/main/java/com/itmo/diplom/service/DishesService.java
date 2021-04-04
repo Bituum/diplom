@@ -1,6 +1,6 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.entities.DishesEntity;
+import com.itmo.diplom.entity.DishesEntity;
 
 
 import java.util.List;

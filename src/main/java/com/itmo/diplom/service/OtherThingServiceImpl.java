@@ -1,7 +1,7 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.OtherThingRepository;
-import com.itmo.diplom.entities.OtherThingEntity;
+import com.itmo.diplom.repository.OtherThingRepository;
+import com.itmo.diplom.entity.OtherThingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

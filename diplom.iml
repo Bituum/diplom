@@ -154,5 +154,6 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-devtools:2.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:7.7.2" level="project" />
   </component>
 </module>

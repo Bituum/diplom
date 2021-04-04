@@ -1,7 +1,7 @@
 package com.itmo.diplom.service;
 
 
-import com.itmo.diplom.entities.MenuEntity;
+import com.itmo.diplom.entity.MenuEntity;
 
 import java.util.List;
 

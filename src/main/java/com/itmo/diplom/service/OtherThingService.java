@@ -1,6 +1,6 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.entities.OtherThingEntity;
+import com.itmo.diplom.entity.OtherThingEntity;
 
 import java.util.*;
 

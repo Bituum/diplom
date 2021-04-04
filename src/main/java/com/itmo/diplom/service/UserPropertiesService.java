@@ -1,7 +1,6 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.entities.UserEntity;
-import com.itmo.diplom.entities.UserPropertiesEntity;
+import com.itmo.diplom.entity.UserPropertiesEntity;
 
 import java.util.List;
 

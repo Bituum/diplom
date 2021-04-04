@@ -1,8 +1,7 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.StorageRepository;
-import com.itmo.diplom.entities.MenuEntity;
-import com.itmo.diplom.entities.StorageEntity;
+import com.itmo.diplom.repository.StorageRepository;
+import com.itmo.diplom.entity.StorageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,7 @@
 package com.itmo.diplom.service;
 
-import com.itmo.diplom.DAO.MenuRepository;
-import com.itmo.diplom.entities.MenuEntity;
-import com.itmo.diplom.entities.OtherThingEntity;
+import com.itmo.diplom.repository.MenuRepository;
+import com.itmo.diplom.entity.MenuEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

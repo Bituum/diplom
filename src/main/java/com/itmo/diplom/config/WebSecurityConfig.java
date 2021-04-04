@@ -1,7 +1,7 @@
 package com.itmo.diplom.config;
 
 import com.itmo.diplom.service.UserDetailsServiceImpl;
-import com.itmo.diplom.utils.MySimpleAuthentificationSuccessHandler;
+import com.itmo.diplom.util.MySimpleAuthentificationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
