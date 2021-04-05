@@ -2,6 +2,7 @@ package com.itmo.diplom.service;
 
 import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.entity.ProductsEntity;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +19,15 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public void saveStorageEntity(ProductsEntity product) {
+    public void save(ProductsEntity product) {
         productsRepository.save(product);
     }
 
     @Override
     public ProductsEntity getProductsEntity(int id) {
-        ProductsEntity tmpProduct = null;
-        Optional<ProductsEntity> optional = productsRepository.findById(id);
-        if(optional.isPresent()){
-            tmpProduct = optional.get();
-        }else {
-            System.out.println("!!!!!Optional is empty!!!!!");
-            throw new IllegalArgumentException();
-        }
-        return tmpProduct;
+        return productsRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Product not found")
+        );
     }
 
     @Override

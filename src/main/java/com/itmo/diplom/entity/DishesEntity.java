@@ -5,14 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
-import java.util.Collection;
+import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "dishes", schema = "diplom")
-public class DishesEntity implements Serializable {
+public class DishesEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -23,9 +24,10 @@ public class DishesEntity implements Serializable {
     @Basic
     @Column(name = "time_to_cooking", nullable = false)
     private Time timeToCooking;
-    @ManyToOne
-    @JoinColumn(name = "products_from_storage", referencedColumnName = "id")
-    private StorageEntity storageByProductsFromStorage;
-    @OneToMany(mappedBy = "dishesByDish")
-    private Collection<MenuEntity> menusById;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "product_dishes",
+            joinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    private List<ProductsEntity> productsEntity;
 }

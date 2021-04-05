@@ -20,8 +20,9 @@ create table product_properties
 
 create table products
 (
-    id int auto_increment
-        primary key
+    id                int auto_increment
+        primary key,
+    small_description varchar(50) not null
 );
 
 create table roles
@@ -111,4 +112,3 @@ create table user_worktime
 
 alter table user_worktime
     add primary key (user_id);
-

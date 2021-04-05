@@ -38,9 +38,6 @@ public class UserEntity implements UserDetails {
     )
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "userByCashierId", fetch = FetchType.LAZY)
-    private Collection<MenuEntity> menusById;
-
     @OneToOne(mappedBy = "userok", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private UserWorktimeEntity userWorktime;

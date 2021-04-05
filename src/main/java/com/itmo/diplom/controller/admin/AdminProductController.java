@@ -1,6 +1,8 @@
 package com.itmo.diplom.controller.admin;
 
+import com.itmo.diplom.entity.ProductPropertiesEntity;
 import com.itmo.diplom.entity.ProductsEntity;
+import com.itmo.diplom.entity.UserPropertiesEntity;
 import com.itmo.diplom.service.ProductPropertiesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +49,12 @@ public class AdminProductController {
 
     @PostMapping
     public String createProduct(Model model,
-                                @ModelAttribute("newModelForm") @Valid ProductsEntity product,
+                                @ModelAttribute("newProductForm") @Valid ProductsEntity product,
                                 BindingResult result){
-
-        //TODO: creation of that model
+        if(result.hasErrors()){
+            //model.addAttribute("errors", result);
+        }
+        productsService.save(product);
         return "redirect:/admin/storage/all";
     }
 
@@ -65,7 +69,10 @@ public class AdminProductController {
     public String editProduct(Model model,
                               @ModelAttribute("editProductForm") @Valid ProductsEntity product,
                               BindingResult result){
-        //TODO: creation of that model
+        if(result.hasErrors()){
+            //model.addAttribute("errors", result);
+        }
+        productsService.save(product);
         return "redirect:/admin/storage/all";
     }
 
@@ -73,21 +80,35 @@ public class AdminProductController {
     public String showProductProperties(Model model,
                                         @PathVariable("id") int id){
         model.addAttribute("productProperty", propertiesService.getProductPropertiesEntity(id));
-        return "/admin/storage/showAllProductProperties";
+        return "admin/storage/showAllProductProperties";
     }
 
     @GetMapping("/admin/storage/property/edit/{id}")
     public String updateProductProperties(Model model,
                                           @PathVariable("id") int id){
         model.addAttribute("editProductProperties", propertiesService.getProductPropertiesEntity(id));
-        return "/admin/storage/editProductProperty";
+        return "admin/storage/editProductProperty";
     }
 
     @PostMapping("/admin/storage/property/edit/{id}")
     public String updateProductProperties(Model model,
                                           @ModelAttribute("editProductForm") @Valid ProductsEntity product,
-                                          BindingResult result){
-
-        return "redirect:/admin/storage/all";
+                                          BindingResult result,
+                                          @PathVariable("id") int id){
+        try{
+            model.addAttribute("pid", id);
+            model.addAttribute("editProductProperties", propertiesService.getProductPropertiesEntity(id));
+            return "admin/storage/editProductProperty";
+        }catch (IllegalArgumentException exception){
+            model.addAttribute("newProductProperties", new ProductPropertiesEntity());
+            return "admin/storage/editProductProperty";
+        }
     }
+
+    @PostMapping("/admin/storage/delete/{id}")
+    public String deleteProduct(@PathVariable("id") int id){
+        productsService.deleteProductsEntity(id);
+        return "redirect:/storage/all";
+    }
+
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +15,12 @@ public class ProductsEntity  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @OneToMany(mappedBy = "productsByProductId")
-    private Collection<StorageEntity> storagesById;
+    
+    @Column(name = "small_description")
+    @Basic
+    private String productDescription;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private ProductPropertiesEntity productProperties;
 }
