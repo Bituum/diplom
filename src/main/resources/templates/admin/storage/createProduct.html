@@ -8,12 +8,11 @@
 </head>
 <body>
     <div th:replace="fragments/header :: headerFragment"></div>
-    <div style="background-color: #212529; position: absolute; right: 45%; top: 0%"><h1 style="color: white">Registration</h1></div>
     <form th:action="@{/admin/storage/create}" th:object="${newProductForm}" method="POST">
         <div class="form-group">
             <div class="input-group mb-3">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Создать</button>
-                <input type="text" class="form-control" placeholder="Password" aria-label="Password" th:field="*{productDescription}">
+                <input type="text" class="form-control" placeholder="Описание" aria-label="Описание" th:field="*{productDescription}">
             </div>
         </div>
     </form>

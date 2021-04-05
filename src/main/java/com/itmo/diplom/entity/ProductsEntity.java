@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "products", schema = "diplom")
 public class ProductsEntity  {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     
@@ -20,7 +20,7 @@ public class ProductsEntity  {
     @Basic
     private String productDescription;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private ProductPropertiesEntity productProperties;
 }

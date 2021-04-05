@@ -14,7 +14,7 @@ import java.sql.Time;
 public class UserWorktimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
     @Basic

@@ -37,7 +37,7 @@ public class UserPropertiesServiceImpl implements UserPropertiesService{
             userProperties.setUser(tmpUser);
             //ставим у проперти юзера иначе ексепшн
 
-            userPropertiesRepository.save(userProperties);
+            userRepository.save(tmpUser);
         }else {
             System.out.println("!!!!!Optional is empty!!!!!");
             throw new IllegalArgumentException();

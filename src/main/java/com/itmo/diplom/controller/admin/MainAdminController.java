@@ -21,10 +21,10 @@ public class MainAdminController {
     @Autowired
     private UserPropertiesServiceImpl userPropertiesService;
 
-    @GetMapping("/admin")
-    public String mainPanel(){
-        return "admin/user/greeting";
-    }
+//    @GetMapping("/admin")
+//    public String mainPanel(){
+//        return "admin/user/greeting";
+//    }
 
     /*@GetMapping("admin/users/{id}")
     public String getOneUser(@PathVariable int id, Model model){

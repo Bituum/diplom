@@ -42,7 +42,7 @@ public class UserEntity implements UserDetails {
     @PrimaryKeyJoinColumn
     private UserWorktimeEntity userWorktime;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private UserPropertiesEntity userPropertiesEntity;
 

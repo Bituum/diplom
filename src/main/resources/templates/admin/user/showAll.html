@@ -28,7 +28,7 @@
                     <td th:text="${user.login}">login</td>
                     <td th:text="${user.getAuthorities()}">role</td>
                     <td>
-                        <a type="button" class="btn btn-outline-info" th:href="@{/admin/users/{id}/properties(id=${user.getId()})}">Подбробнее</a>
+                        <a type="button" class="btn btn-outline-info" th:href="@{/admin/users/{id}/properties(id=${user.getId()})}">Подробнее</a>
                     </td>
                     <td>
                         <form th:method="POST"

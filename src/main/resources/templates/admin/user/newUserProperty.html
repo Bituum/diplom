@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" placeholder="Salary" aria-label="Salary" th:field="*{salary}">
                 <input type="text" class="form-control" placeholder="Sex" aria-label="Sex" th:field="*{sex}">
                 <input th:if="${pid} > 0" style="" type="text" class="form-control" placeholder="Name" aria-label="Name" id="userId" name="userId" th:value="${pid}">
-                <input th:if="${pid} == 0" style="" type="text" class="form-control" placeholder="Name" aria-label="Name"  th:value="${pid}">
+                <input th:if="${pid} == 0" style="display: none" type="text" class="form-control" placeholder="Name" aria-label="Name"  th:value="${pid}">
             </div>
         </div>
     </form>

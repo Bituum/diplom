@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
+
 @Service
 public class ProductPropertiesServiceImpl implements ProductPropertiesService{
     @Autowired
     private ProductPropertiesRepository productPropertiesRepository;
+
+    private static Logger logger = Logger.getLogger(ProductPropertiesServiceImpl.class.getName());
 
     @Autowired
     private ProductsRepository productsRepository;
@@ -23,12 +27,18 @@ public class ProductPropertiesServiceImpl implements ProductPropertiesService{
     }
 
     @Override
-    public void saveOtherThingsEntities(ProductPropertiesEntity productProperties) {
+    public boolean save(ProductPropertiesEntity productProperties) {
         Optional<ProductsEntity> product = productsRepository.findById(productProperties.getProductsId());
         if(product.isPresent()){
+            logger.info("ive enterned to the method save product properties");
             ProductsEntity productsTmp = product.get();
+            logger.info("productTmp   ==     " +productsTmp);
             productsTmp.setProductProperties(productProperties);
+            logger.info("ProductsTmp productProperties id ==      " + productsTmp.getProductProperties().getProductsId());
             productProperties.setProduct(productsTmp);
+            logger.info("product properties product" +productProperties.getProduct());
+            productsRepository.save(productsTmp);
+            return true;
         }else{
             throw new IllegalArgumentException("Could not save the product properties");
         }

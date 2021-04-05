@@ -18,14 +18,14 @@ public class DishesServiceImpl implements DishesService{
     }
 
     @Override
-    public void saveDishesEntity(DishesEntity dish) {
+    public void save(DishesEntity dish) {
         dishesRepository.save(dish);
     }
 
     @Override
     public DishesEntity getDishesEntity(int id) {
         return dishesRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Not found")
+                () -> new IllegalArgumentException("Dish not found")
         );
     }
 

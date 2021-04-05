@@ -9,7 +9,7 @@
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
 <div style="position: absolute; background-color: #212529; top: 1%; right:15%">
-    <a type="button" class="btn btn-outline-light" aria-disabled="true" th:href="@{/admin/users/registration}">Создать нового пользователя</a>
+    <a type="button" class="btn btn-outline-light" aria-disabled="true" th:href="@{/admin/storage/create}">Добавить продукт</a>
 </div>
 <table class="table">
     <thead  class="table-dark">
@@ -26,7 +26,7 @@
             <th scope="row" th:text="${product.id}">1</th>
             <td th:text="${product.productDescription}">login</td>
             <td>
-                <a type="button" class="btn btn-outline-info" th:href="@{admin/storage/edit/{id}(id=${product.id})}">Подробнее</a>
+                <a type="button" class="btn btn-outline-info" th:href="@{/admin/storage/{id}/properties(id=${product.id})}">Подробнее</a>
             </td>
             <td>
                 <form th:method="POST"

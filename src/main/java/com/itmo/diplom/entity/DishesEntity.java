@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "dishes", schema = "diplom")
 public class DishesEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
@@ -24,7 +24,7 @@ public class DishesEntity{
     @Basic
     @Column(name = "time_to_cooking", nullable = false)
     private Time timeToCooking;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_dishes",
             joinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")

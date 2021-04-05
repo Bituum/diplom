@@ -7,9 +7,44 @@
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
-    <div>admin panel</div>
-    <h2>Что делать?</h2>
-    <a href="/admin/users/all">Просмотр всех пользователей</a>
+<table class="table">
+    <thead  class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Блюдо</th>
+        <th scope="col">Время готовки</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <div th:each="dish : ${dishesForm}">
+        <tbody>
+        <tr>
+            <th scope="row" th:text="${dish.id}">1</th>
+            <td>
+                <div class="button_class">
+                    <a class="link_class" href="#" th:text="${dish.nameOfDish}">My Link</a>
+                </div>
+            </td>
+            <td>
+                <div class="button_class">
+                    <a class="link_class" href="#" th:text="${dish.timeToCooking}">My Link</a>
+                </div>
+            </td>
+            <td>
+                <a type="button" class="btn btn-outline-info" th:href="@{/admin/users/{id}/properties(id=${user.getId()})}">Подробнее</a>
+            </td>
+            <td>
+                <form th:method="POST"
+                      th:action="@{/admin/menu/edit/{id}(id=${dish.id})}" style="display: inline">
+                    <button type="submit" class="btn btn-outline-danger" id="deleteButton">Удалить</button>
+                </form>
+                <a th:href="@{/admin/menu/edit/{id}(id=${dish.id})}" type="button" class="btn btn-outline-warning" id="editButton">Изменить</a>
+            </td>
+        </tr>
+        </tbody>
+    </div>
+</table>
 
 </body>
 </html>
