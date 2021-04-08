@@ -1,19 +1,20 @@
-create table dishes
+create table other_thing
 (
-    id              int auto_increment
+    id          int auto_increment
         primary key,
-    name_of_dish    varchar(100) not null,
-    time_to_cooking time         not null
+    name        varchar(255) not null,
+    description varchar(255) not null,
+    amount      int          not null
 );
 
 create table product_properties
 (
-    name               varchar(255) not null,
-    shelf_life         date         not null,
-    amount             int          not null,
-    cost               int          not null,
-    calories_per_piece int          not null,
-    products_id        int          not null
+    name                  varchar(255) not null,
+    `shelf life`          date         not null,
+    amount                int          not null,
+    cost                  int          not null,
+    ` calories_per_piece` int          not null,
+    products_id           int          not null
         primary key
 );
 
@@ -24,23 +25,35 @@ create table products
     small_description varchar(50) not null
 );
 
-create table product_dishes
-(
-    id         int auto_increment
-        primary key,
-    product_id int not null,
-    dish_id    int null,
-    constraint product_dishes_dishes_id_fk
-        foreign key (dish_id) references dishes (id),
-    constraint product_dishes_products_id_fk
-        foreign key (product_id) references products (id)
-);
-
 create table roles
 (
     id        int auto_increment
         primary key,
     role_name varchar(255) not null
+);
+
+create table storage
+(
+    id             int not null
+        primary key,
+    product_id     int not null,
+    other_things   int not null,
+    other_thing_id int not null,
+    constraint storage_other_thing_id_fk
+        foreign key (other_thing_id) references other_thing (id),
+    constraint storage_products_id_fk
+        foreign key (product_id) references products (id)
+);
+
+create table dishes
+(
+    id                    int auto_increment
+        primary key,
+    name_of_dish          int  not null,
+    time_to_cooking       time not null,
+    products_from_storage int  null,
+    constraint dishes_storage_id_fk
+        foreign key (products_from_storage) references storage (id)
 );
 
 create table user
@@ -49,6 +62,18 @@ create table user
         primary key,
     login  varchar(255) not null,
     passwd varchar(255) not null
+);
+
+create table menu
+(
+    id         int auto_increment
+        primary key,
+    dish       int not null,
+    cashier_id int not null,
+    constraint menu_dishes_id_fk
+        foreign key (dish) references dishes (id),
+    constraint menu_user_id_fk
+        foreign key (cashier_id) references user (id)
 );
 
 create table user_properties
@@ -87,4 +112,3 @@ create table user_worktime
 
 alter table user_worktime
     add primary key (user_id);
-

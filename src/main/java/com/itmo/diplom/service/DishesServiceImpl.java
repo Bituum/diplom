@@ -35,11 +35,10 @@ public class DishesServiceImpl implements DishesService{
         List<ProductsEntity> products = dish.getProductsEntity();
         logger.info("products : " + dish.getProductsEntity());
         List<ProductsEntity> checked = new ArrayList<>();
-        System.out.println(products);
         for(ProductsEntity p : products){
-            logger.info("product description is  " + p.getProductDescription());
-            //findByProductDecription is custom Jpa query
-            Optional<ProductsEntity> tmp = productsRepository.findByProductDescription(p.getProductDescription());
+            logger.info("id of product is " + p.getId());
+
+            Optional<ProductsEntity> tmp = productsRepository.findById(p.getId());
             if(tmp.isPresent()){
                 ProductsEntity productsEntity = tmp.get();
                 checked.add(productsEntity);

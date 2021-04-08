@@ -1,6 +1,7 @@
 package com.itmo.diplom.controller.admin;
 
 import com.itmo.diplom.entity.DishesEntity;
+import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import javax.validation.Valid;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @Controller
@@ -63,7 +67,15 @@ public class AdminDishesController {
     @GetMapping("/admin/menu/create")
     public String createDish(Model model,
                              @ModelAttribute("dishAttr") DishesEntity dishesEntity){
-        model.addAttribute("listOfProducts", productsService.getAllProductsEntities());
+        List<Integer> listI = new ArrayList<>();
+        List<String> listStr = new ArrayList<>();
+        for(ProductsEntity p : productsService.getAllProductsEntities()){
+            listI.add(p.getId());
+            listStr.add(p.getProductDescription());
+        }
+        model.addAttribute("listOfProducts", listI);
+        model.addAttribute("listStr", listStr);
+        model.addAttribute("fullList", productsService.getAllProductsEntities());
         return "admin/menu/createDish";
     }
 
