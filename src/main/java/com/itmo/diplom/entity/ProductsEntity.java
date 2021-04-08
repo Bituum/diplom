@@ -20,6 +20,9 @@ public class ProductsEntity  {
     @Basic
     private String productDescription;
 
+    @Transient
+    private int counterOrder;
+
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private ProductPropertiesEntity productProperties;
