@@ -75,7 +75,7 @@ public class AdminDishesController {
         }
         model.addAttribute("listOfProducts", listI);
         model.addAttribute("listStr", listStr);
-        model.addAttribute("fullList", productsService.getAllProductsEntities());
+        model.addAttribute("fullList", dishesService.getAllDishesEntities());
         return "admin/menu/createDish";
     }
 
@@ -86,8 +86,12 @@ public class AdminDishesController {
         if(result.hasErrors()){
             //model.addAttribute("errors", result);
         }
+
         logger.info("name of dish == ["+ dish.getNameOfDish()+ "] dish TFC == [" + dish.getTimeToCooking()+"]");
-        logger.info("products == ["+ dish.getProductsEntity()+ "]");
+
+        for(ProductsEntity d : dish.getProductsEntity()){
+            logger.info("id == ["+d.getId()+"]");
+        }
         dishesService.save(dish);
         return "redirect:/admin/menu/all";
     }

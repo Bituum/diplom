@@ -23,7 +23,7 @@
                     </div>
                     <div class="col form-group">
                         <label for="catalogName">Time to Cook</label>
-                        <input th:field="*{timeToCooking}" type="time" class="form-control" id="catalogName">
+                        <input th:field="*{timeToCooking}" type="text" class="form-control" id="catalogName">
                     </div>
                 </div>
             </div>
@@ -44,11 +44,10 @@
                     <div class="col form-group">
                         <input th:field="*{productsEntity[__${status.index}__].counterOrder}" type="text" class="form-control">
                     </div>
-                    <select th:field="*{productsEntity}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" multiple="multiple">
-                        <option th:each="i : ${listOfProducts}"
-                                th:field="*{productsEntity[__${status.index}__].id}" th:value="${i.id}" th:text="${i.productDescription}">
-                        </option>
-                    </select>
+                    <!--<select th:field="*{productsEntity[__${status.index}__].id}">
+                        <option></option>
+                    </select>-->
+
                 </div>
             </div>
         </div>
@@ -91,15 +90,15 @@
                 col.classList.add('d-none'); //field with id - hidden
             }
             if (fieldName === 'productsEntity'){
-                selectList.setAttribute('th:field', '*{fullList.id}');
+                selectList.setAttribute('th:field', '*{productsEntity['+rowIndex+'].id}');
                 for(let i = 0; i < listName.length; i++){
                     let option = document.createElement("option");
-                    option.value = listName[i];
+                    //option.value = listName[i];
                     option.text = listStr[i];
-                    option.setAttribute('th:field', '*{fullList.id}');
-                    option.setAttribute('th:each', 'i : ${fullList}' );
-                    option.setAttribute('th:value', '${i.id}');
-                    option.setAttribute('th:text', '${i.productDescription');
+                    option.setAttribute('th:each', 'pr : ${fullList}' );
+                    option.setAttribute('th:value', '${pr.id}');
+                    option.id='productsEntity';
+                    option.setAttribute('th:text', '${pr.productDescription');
                     selectList.appendChild(option);
                 }
                 col.appendChild(selectList);
@@ -110,8 +109,9 @@
 
                 input.type = 'text';
                 input.classList.add('form-control');
-                input.id = listName + rowIndex + '.' + fieldName;
-                input.setAttribute('name', listName + '[' + rowIndex + '].' + fieldName);
+                input.setAttribute('th:field', '*{productsEntity['+rowIndex+'].counterOrder}}');
+                // input.id = listName + rowIndex + '.' + fieldName;
+                // input.setAttribute('name', listName + '[' + rowIndex + '].' + fieldName);
                 col.appendChild(input);
                 row.appendChild(col);
             }
