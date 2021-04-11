@@ -2,6 +2,7 @@ package com.itmo.diplom.controller.admin;
 
 import com.itmo.diplom.entity.DishesEntity;
 import com.itmo.diplom.entity.ProductsEntity;
+import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +37,11 @@ public class AdminDishesController {
     @Autowired
     private ProductsServiceImpl productsService;
 
-    @InitBinder
-    public void dataBinding(WebDataBinder binder){
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        binder.registerCustomEditor(Time.class, new CustomDateEditor(format, false));
+    @Autowired
+    private ProductsRepository productsRepository;
+
+    private LocalTime timeChanger(String str) throws ParseException {
+        return LocalTime.parse(str);
     }
 
     @GetMapping("/admin/")
@@ -82,14 +88,23 @@ public class AdminDishesController {
                                 @RequestParam(value = "name") String name,
                                 @RequestParam(value = "time") String time,
                                 @RequestParam(value = "myParam[]", required = false) List<String> idp,
-                                @RequestParam(value = "myAmount[]", required = false) List<Integer> amount){
+                                @RequestParam(value = "myAmount[]", required = false) List<Integer> amount) throws ParseException {
 
-        logger.info("myParam[]" + idp.toString());
-        logger.info("myAmount[]" + amount.toString());
-        //logger.info("dish id = " + dish.getId());
-//        for(ProductsEntity d : dish.getProductsEntity()){
-//            logger.info("id == ["+d.getId()+"]");
-//        }
+        DishesEntity d = new DishesEntity();
+        d.setId(Integer.getInteger(id));
+        d.setNameOfDish(name);
+        d.setTimeToCooking(timeChanger(time));
+        dishesService.save(d);
+        List<ProductsEntity> entityList = new ArrayList<>();
+        for(int i = 0; i < idp.size(); i++){
+            ProductsEntity tmp = productsService.getProductsEntity(productsRepository.findByProductDescription(idp.get(i)).get().getId());
+            tmp.setCounterOrder(amount.get(i));
+            entityList.add(tmp);
+        }
+        d.setProductsEntity(entityList);
+        dishesService.save(d);
+        //for(ProductsEntity p : dishesService.)
+
         //dishesService.save(dish);
         return "redirect:/admin/";
     }
@@ -118,5 +133,11 @@ public class AdminDishesController {
                             @PathVariable("id") int id){
         dishesService.makeAnOrder(id);
         return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/menu/delete/{id}")
+    public String deleteUser(@PathVariable("id") int dishId){
+        dishesService.deleteDishesEntity(dishId);
+        return "redirect:/admin/";
     }
 }

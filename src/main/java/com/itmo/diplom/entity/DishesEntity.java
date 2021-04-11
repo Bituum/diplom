@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -32,9 +33,8 @@ public class DishesEntity{
 
     @Basic
     @Column(name = "time_to_cooking")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private Time timeToCooking;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private LocalTime timeToCooking;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
     @Nullable
     @JoinTable(name = "product_dishes",
             joinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id"),

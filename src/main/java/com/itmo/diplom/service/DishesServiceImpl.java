@@ -32,20 +32,7 @@ public class DishesServiceImpl implements DishesService{
 
     @Override
     public void save(DishesEntity dish) {
-        List<ProductsEntity> products = dish.getProductsEntity();
-        logger.info("products : " + dish.getProductsEntity());
-        List<ProductsEntity> checked = new ArrayList<>();
-        for(ProductsEntity p : products){
-            logger.info("id of product is " + p.getId());
 
-            Optional<ProductsEntity> tmp = productsRepository.findById(p.getId());
-            if(tmp.isPresent()){
-                ProductsEntity productsEntity = tmp.get();
-                checked.add(productsEntity);
-            }
-        }
-        dish.setProductsEntity(checked);
-        logger.info("dishes product now: " + dish.getProductsEntity());
         dishesRepository.save(dish);
     }
 
