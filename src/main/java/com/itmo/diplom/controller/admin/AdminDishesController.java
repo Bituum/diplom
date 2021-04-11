@@ -38,13 +38,6 @@ public class AdminDishesController {
         binder.registerCustomEditor(Time.class, new CustomDateEditor(format, false));
     }
 
-    @ModelAttribute("dishAttr")
-    public DishesEntity getDishes(){
-        DishesEntity dish = new DishesEntity();
-        dish.setProductsEntity(new ArrayList<>());
-        return dish;
-    }
-
     @GetMapping("/admin/")
     public String showAllDish(Model model){
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
@@ -73,6 +66,10 @@ public class AdminDishesController {
             listI.add(p.getId());
             listStr.add(p.getProductDescription());
         }
+        List<DishesEntity> listDish = new ArrayList<>();
+        listDish = dishesService.getAllDishesEntities();
+
+        model.addAttribute("lastId", listDish.get(listDish.size() - 1).getId());
         model.addAttribute("listOfProducts", listI);
         model.addAttribute("listStr", listStr);
         model.addAttribute("fullList", dishesService.getAllDishesEntities());
@@ -81,19 +78,20 @@ public class AdminDishesController {
 
     @PostMapping("/admin/menu/create")
     public String createDish(Model model,
-                                @ModelAttribute("newMenuForm") @Valid DishesEntity dish,
-                                BindingResult result){
-        if(result.hasErrors()){
-            //model.addAttribute("errors", result);
-        }
+                                @RequestParam(value = "id") String id,
+                                @RequestParam(value = "name") String name,
+                                @RequestParam(value = "time") String time,
+                                @RequestParam(value = "myParam[]", required = false) List<String> idp,
+                                @RequestParam(value = "myAmount[]", required = false) List<Integer> amount){
 
-        logger.info("name of dish == ["+ dish.getNameOfDish()+ "] dish TFC == [" + dish.getTimeToCooking()+"]");
-
-        for(ProductsEntity d : dish.getProductsEntity()){
-            logger.info("id == ["+d.getId()+"]");
-        }
-        dishesService.save(dish);
-        return "redirect:/admin/menu/all";
+        logger.info("myParam[]" + idp.toString());
+        logger.info("myAmount[]" + amount.toString());
+        //logger.info("dish id = " + dish.getId());
+//        for(ProductsEntity d : dish.getProductsEntity()){
+//            logger.info("id == ["+d.getId()+"]");
+//        }
+        //dishesService.save(dish);
+        return "redirect:/admin/";
     }
 
     @GetMapping("/admin/menu/edit/{id}")

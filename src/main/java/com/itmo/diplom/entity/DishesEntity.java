@@ -3,6 +3,7 @@ package com.itmo.diplom.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.List;
 public class DishesEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic
     @Column(name = "name_of_dish", nullable = false)
@@ -30,10 +31,11 @@ public class DishesEntity{
     private int isActive = 0;
 
     @Basic
-    @Column(name = "time_to_cooking", nullable = false)
+    @Column(name = "time_to_cooking")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private Time timeToCooking;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Nullable
     @JoinTable(name = "product_dishes",
             joinColumns = @JoinColumn(name = "dish_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
