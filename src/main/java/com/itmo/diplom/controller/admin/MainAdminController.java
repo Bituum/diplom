@@ -142,4 +142,8 @@ public class MainAdminController {
         //TODO: make try catch
         return "redirect:/admin/users/all";
     }
+    @GetMapping("/admin/time_manager")
+    public String showTime(){
+        return "/admin/user/showTime";
+    }
 }

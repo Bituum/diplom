@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>greeting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
-    <div th:replace="fragments/specialHeader :: headerFragment"></div>
+<div th:replace="fragments/rHeader :: headerFragment"></div>
 
-    <div>General User page</div>
-        <h1>
-            <strong>HELLO FELLOW AVERAGE USER</strong>
-        </h1>
+<table class="table">
+    <thead  class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Блюдо</th>
+        <th scope="col">Время готовки</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <div th:each="dish : ${dishesForm}">
+        <tbody>
+        <tr>
+            <th scope="row" th:text="${dish.id}">1</th>
+            <td th:text="${dish.nameOfDish}">My Link</td>
+            <td th:text="${dish.timeToCooking}">My Link</td>
+            <td>
+                <a type="button" class="btn btn-outline-success" th:href="@{/admin/users/{id}/properties(id=${dish.id})}">Добавить</a>
+            </td>
+        </tr>
+        </tbody>
+    </div>
+</table>
+
 </body>
 </html>
