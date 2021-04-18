@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -25,11 +26,16 @@ public class DishesEntity{
     private Integer id;
     @Basic
     @Column(name = "name_of_dish", nullable = false)
+    @NotNull
     private String nameOfDish;
 
     //Count of active orders
     @Transient
     private int isActive = 0;
+
+    public void initActive(){
+        isActive++;
+    }
 
     @Basic
     @Column(name = "time_to_cooking")

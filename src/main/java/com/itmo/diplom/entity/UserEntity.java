@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,10 +28,12 @@ public class UserEntity implements UserDetails {
     @Basic
     @Column(name = "login", nullable = false, length = 255)
     @Size(min = 2, message = "Login is too short")
+    @NotNull
     private String login;
     @Basic
     @Column(name = "passwd", nullable = false, length = 255)
     @Size(min = 2, message = "password is too short")
+    @NotNull
     private String passwd;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

@@ -48,21 +48,27 @@ public class DishesServiceImpl implements DishesService{
         dishesRepository.deleteById(id);
     }
 
-    public void makeAnOrder(int dishId){
-        Optional<DishesEntity>  optional = dishesRepository.findById(dishId);;
+    public boolean makeAnOrder(int dishId){
+        Optional<DishesEntity>  optional = dishesRepository.findById(dishId);
         int amountOfProduct = 0;
         DishesEntity dish;
         if(optional.isPresent()){
             dish = optional.get();
+            dish.initActive();
             List<ProductsEntity> list = dish.getProductsEntity();
             for(ProductsEntity l : list){
-                for(int i = 0; i < l.getCounterOrder(); i++){
+                List<Integer> counterList = dishesRepository.findCounterOrder(l.getId());
+                for(int i = 0; i < counterList.size(); i++){
                     amountOfProduct = l.getProductProperties().getAmount();
-                    amountOfProduct--;
                     if(amountOfProduct < 20){
                         logger.info("less than 20 products exception");
-                        throw new IllegalArgumentException("few products");
                     }
+                    amountOfProduct--;
+                    if(amountOfProduct == 0){
+                        l.setCounterOrder(0);
+                        throw new IllegalArgumentException("zero product");
+                    }
+
                 }
             }
 
@@ -71,5 +77,6 @@ public class DishesServiceImpl implements DishesService{
             }
             dishesRepository.save(dish);
         }
+        return false;
     }
 }
