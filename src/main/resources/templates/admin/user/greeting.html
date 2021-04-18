@@ -25,7 +25,10 @@
             <td th:text="${dish.nameOfDish}">My Link</td>
             <td th:text="${dish.timeToCooking}">My Link</td>
             <td>
-                <a type="button" class="btn btn-outline-success" th:href="@{/admin/users/{id}/properties(id=${dish.id})}">Добавить</a>
+                <div th:if="${productError} == 1" class="alert alert-primary" role="alert"></div>
+                <form th:method="POST" th:action="@{/admin/make_order/{id}(id=${dish.id})}">
+                <button type="submit" class="btn btn-outline-success">Добавить</button>
+                </form>
             </td>
             <td>
                 <form th:method="POST"

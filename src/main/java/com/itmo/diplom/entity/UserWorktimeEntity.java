@@ -3,6 +3,7 @@ package com.itmo.diplom.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 
 @Getter
@@ -19,9 +20,11 @@ public class UserWorktimeEntity{
     private Integer id;
     @Basic
     @Column(name = "start_time", nullable = false)
+    @NotNull
     private Time startTime;
     @Basic
     @Column(name = "end_time", nullable = false)
+    @NotNull
     private Time endTime;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId

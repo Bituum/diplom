@@ -2,6 +2,7 @@ package com.itmo.diplom.controller.admin;
 
 import com.itmo.diplom.entity.DishesEntity;
 import com.itmo.diplom.entity.ProductsEntity;
+import com.itmo.diplom.repository.DishesRepository;
 import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
@@ -10,10 +11,12 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +34,7 @@ public class AdminDishesController {
 
     private static Logger logger = Logger.getLogger(AdminDishesController.class.getName());
 
+    private boolean hasError;
     @Autowired
     private DishesServiceImpl dishesService;
 
@@ -39,6 +43,9 @@ public class AdminDishesController {
 
     @Autowired
     private ProductsRepository productsRepository;
+
+    @Autowired
+    private DishesRepository repository;
 
     private LocalTime timeChanger(String str) throws ParseException {
         return LocalTime.parse(str);
@@ -85,7 +92,8 @@ public class AdminDishesController {
     @PostMapping("/admin/menu/create")
     public String createDish(Model model,
                                 @RequestParam(value = "id") String id,
-                                @RequestParam(value = "name") String name,
+                                @RequestParam(value = "name")
+                                 @Size(min=1, max = 50, message = "Название продукта должно быть больше 1 и меньше 50") String name,
                                 @RequestParam(value = "time") String time,
                                 @RequestParam(value = "myParam[]", required = false) List<String> idp,
                                 @RequestParam(value = "myAmount[]", required = false) List<Integer> amount) throws ParseException {
@@ -98,11 +106,16 @@ public class AdminDishesController {
         List<ProductsEntity> entityList = new ArrayList<>();
         for(int i = 0; i < idp.size(); i++){
             ProductsEntity tmp = productsService.getProductsEntity(productsRepository.findByProductDescription(idp.get(i)).get().getId());
-            tmp.setCounterOrder(amount.get(i));
             entityList.add(tmp);
         }
         d.setProductsEntity(entityList);
         dishesService.save(d);
+        for(int i = 0; i < amount.size(); i++){
+            repository.insertCounterOrder(amount.get(i), d.getId());
+            logger.info("amount is "+amount.get(i));
+            logger.info("dish id is "+d.getId());
+            logger.info("INSERT HAS BEEN INSERTED");
+        }
         //for(ProductsEntity p : dishesService.)
 
         //dishesService.save(dish);
@@ -121,7 +134,6 @@ public class AdminDishesController {
                               @ModelAttribute("editMenuForm") @Valid DishesEntity dish,
                               BindingResult result){
         if(result.hasErrors()){
-            //model.addAttribute("errors", result);
             return "admin/menu/changeMenu";
         }
         dishesService.save(dish);
@@ -130,13 +142,25 @@ public class AdminDishesController {
 
     @PostMapping("/admin/make_order/{id}")
     public String makeOrder(Model model,
-                            @PathVariable("id") int id){
-        dishesService.makeAnOrder(id);
-        return "redirect:/admin";
-    }
+                            @PathVariable("id") int id
+    ){
+        try {
+            if (!dishesService.makeAnOrder(id)) {
+                model.addAttribute("productError", 1);
+                return "admin/user/greeting";
+            }
+        }catch (IllegalArgumentException exception) {
+            model.addAttribute("amountError", 1);
+            return  "admin/user/greeting";
+        }
+
+
+            return "redirect:/admin";
+        }
+
 
     @PostMapping("/admin/menu/delete/{id}")
-    public String deleteUser(@PathVariable("id") int dishId){
+    public String deleteDish(@PathVariable("id") int dishId){
         dishesService.deleteDishesEntity(dishId);
         return "redirect:/admin/";
     }

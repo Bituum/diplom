@@ -3,6 +3,8 @@ package com.itmo.diplom.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class ProductsEntity  {
     
     @Column(name = "small_description")
     @Basic
+    @NotNull
+    @Size(min=2, max = 50)
     private String productDescription;
 
     @Transient
