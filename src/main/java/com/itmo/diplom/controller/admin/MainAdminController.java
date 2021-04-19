@@ -43,7 +43,7 @@ public class MainAdminController {
         return "admin/user/changeUser";
     }
     @PostMapping("/admin/users/edit/{id}")
-    public String changeUser(@ModelAttribute("userForm") @Valid UserEntity userForm, Model model, BindingResult result ){
+    public String changeUser(@ModelAttribute("userForm") @Valid UserEntity userForm, BindingResult result ){
         if(result.hasErrors()){
             //TODO valid form
             //model.addAttribute("usernameError", "Username this that login is existing");
@@ -68,7 +68,7 @@ public class MainAdminController {
     }
 
     @PostMapping("/admin/users/registration")
-    public String addNewUser(@ModelAttribute("userForm") @Valid UserEntity userForm, Model model, BindingResult result){
+    public String addNewUser(@ModelAttribute("userForm") @Valid UserEntity userForm, BindingResult result){
         if(result.hasErrors()){
             return "admin/user/registration";
         }
