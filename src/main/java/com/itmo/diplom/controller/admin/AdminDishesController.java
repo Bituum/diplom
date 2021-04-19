@@ -5,6 +5,7 @@ import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.repository.DishesRepository;
 import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.service.DishesServiceImpl;
+import com.itmo.diplom.service.ProductPropertiesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -47,6 +48,9 @@ public class AdminDishesController {
     @Autowired
     private DishesRepository repository;
 
+    @Autowired
+    private ProductPropertiesServiceImpl propertiesService;
+
     private LocalTime timeChanger(String str) throws ParseException {
         return LocalTime.parse(str);
     }
@@ -56,11 +60,7 @@ public class AdminDishesController {
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
         return "admin/user/greeting";
     }
-    @GetMapping("/admin/menu")
-    public String showAllMenu(Model model){
-        model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
-        return "admin/user/greeting";
-    }
+
 
     @GetMapping("/admin/menu/{id}")
     public String showDish(Model model,
@@ -116,9 +116,6 @@ public class AdminDishesController {
             logger.info("dish id is "+d.getId());
             logger.info("INSERT HAS BEEN INSERTED");
         }
-        //for(ProductsEntity p : dishesService.)
-
-        //dishesService.save(dish);
         return "redirect:/admin/";
     }
 
@@ -140,6 +137,7 @@ public class AdminDishesController {
         return "redirect:/admin";
     }
 
+
     @PostMapping("/admin/make_order/{id}")
     public String makeOrder(Model model,
                             @PathVariable("id") int id
@@ -150,12 +148,11 @@ public class AdminDishesController {
                 return "admin/user/greeting";
             }
         }catch (IllegalArgumentException exception) {
+            model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
             model.addAttribute("amountError", 1);
             return  "admin/user/greeting";
         }
-
-
-            return "redirect:/admin";
+            return "redirect:/admin/";
         }
 
 
@@ -164,4 +161,6 @@ public class AdminDishesController {
         dishesService.deleteDishesEntity(dishId);
         return "redirect:/admin/";
     }
+
+    //TODO чтобы сделать вывод всех описаний продукта у которых есть проблема, сделай через thymeleaf if property.amount == 0
 }

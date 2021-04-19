@@ -51,31 +51,33 @@ public class DishesServiceImpl implements DishesService{
     public boolean makeAnOrder(int dishId){
         Optional<DishesEntity>  optional = dishesRepository.findById(dishId);
         int amountOfProduct = 0;
+        int counterCounterOrder = 0;
         DishesEntity dish;
         if(optional.isPresent()){
             dish = optional.get();
             dish.initActive();
             List<ProductsEntity> list = dish.getProductsEntity();
+
+            List<Integer> counterList = dishesRepository.findCounterOrder(dish.getId());
             for(ProductsEntity l : list){
-                List<Integer> counterList = dishesRepository.findCounterOrder(l.getId());
-                for(int i = 0; i < counterList.size(); i++){
-                    amountOfProduct = l.getProductProperties().getAmount();
-                    if(amountOfProduct < 20){
-                        logger.info("less than 20 products exception");
-                    }
+                amountOfProduct = l.getProductProperties().getAmount();
+                for(int i = 0; i < counterList.get(counterCounterOrder); i++){
+                    //TODO: refact this garbage
+                    //TODO 1st: remove the loop
+                    //TODO 2nd: rafact this to java 8 this stream api and lambda
                     amountOfProduct--;
                     if(amountOfProduct == 0){
-                        l.setCounterOrder(0);
                         throw new IllegalArgumentException("zero product");
                     }
-
                 }
+                counterCounterOrder++;
             }
 
             for(ProductsEntity l : list){
                 l.getProductProperties().setAmount(amountOfProduct);
             }
             dishesRepository.save(dish);
+            return true;
         }
         return false;
     }
