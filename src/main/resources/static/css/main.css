@@ -45,3 +45,9 @@
 #button-addon1{
     width: 100%;
 }
+
+#errorDIV{
+    position: absolute;
+    width: 100%;
+    background-color: #212529;
+}

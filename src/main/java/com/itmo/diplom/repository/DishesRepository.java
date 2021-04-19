@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface DishesRepository extends JpaRepository<DishesEntity, Integer> {
-    @Query(value = "select CounterOrder from dishes d join product_dishes pd on d.id = pd.dish_id where d.id = ?1", nativeQuery = true)
+    @Query(value = "select CounterOrder from dishes d join product_dishes pd on d.id = pd.dish_id where d.id = :v", nativeQuery = true)
     List<Integer> findCounterOrder(@Param("v") int id);
 
     @Modifying

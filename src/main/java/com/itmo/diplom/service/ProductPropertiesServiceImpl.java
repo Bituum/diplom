@@ -43,8 +43,6 @@ public class ProductPropertiesServiceImpl implements ProductPropertiesService{
             throw new IllegalArgumentException("Could not save the product properties");
         }
 
-
-
         //productPropertiesRepository.save(productProperties);
     }
 
