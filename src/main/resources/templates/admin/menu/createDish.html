@@ -68,10 +68,10 @@
 
 <script type="text/javascript" th:inline="javascript">
     let addRow = function () {
-        let listName = [[${listOfProducts}]]; //list name in Catalog.class
-        let listStr = [[${listStr}]];
-        let fieldsNames = ['id','productsEntity','counterOrder']; //field names from Movie.class
-        let rowIndex = document.querySelectorAll('.item').length; //we can add mock class to each movie-row
+        let listName = [[${listOfProducts}]]; //id
+        let listStr = [[${listStr}]];//text
+        let fieldsNames = ['id','productsEntity','counterOrder'];
+        let rowIndex = document.querySelectorAll('.item').length;
         let selectList = document.createElement("select");
 
 
@@ -91,10 +91,10 @@
                 selectList.setAttribute('id', 'myParam[]');
                 for(let i = 0; i < listName.length; i++){
                     let option = document.createElement("option");
-                    //option.value = listName[i];
+
                     option.setAttribute('th:each', 'i : ${listOfProducts}');
                     option.setAttribute('th:value', '${'+listName[i]+'}');
-                    //option.setAttribute('th:text', '${'+listStr[i]+'}');
+
                     option.text=listStr[i];
                     option.setAttribute('th:selected', '${myParam[].i == i}');
 
@@ -109,9 +109,6 @@
                 input.type = 'text';
                 input.classList.add('form-control');
                 input.name="myAmount[]";
-                //input.setAttribute('th:field', '*{productsEntity['+rowIndex+'].counterOrder}}');
-                // input.id = listName + rowIndex + '.' + fieldName;
-                // input.setAttribute('name', listName + '[' + rowIndex + '].' + fieldName);
                 col.appendChild(input);
                 row.appendChild(col);
             }

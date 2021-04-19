@@ -27,13 +27,13 @@ public class UserEntity implements UserDetails {
     private Integer id;
     @Basic
     @Column(name = "login", nullable = false, length = 255)
-    @Size(min = 2, message = "Login is too short")
-    @NotNull
+    @Size(min = 2, message = "Логин слишком короткий")
+    @NotNull(message = "Логин не должен быть пустым")
     private String login;
     @Basic
     @Column(name = "passwd", nullable = false, length = 255)
-    @Size(min = 2, message = "password is too short")
-    @NotNull
+    @Size(min = 2, message = "Пароль слишком короткий")
+    @NotNull(message = "Пароль не должен быть пустым")
     private String passwd;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -92,5 +92,13 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "login='" + login + '\'' +
+                ", passwd='" + passwd + '\'' +
+                '}';
     }
 }

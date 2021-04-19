@@ -26,7 +26,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addNewUser(@ModelAttribute("userForm") @Valid UserEntity userForm, Model model, BindingResult result){
+    public String addNewUser(@Valid @ModelAttribute("userForm") UserEntity userForm,
+                             BindingResult result,
+                             Model model){
         if(result.hasErrors()){
             return "starter/registration";
         }

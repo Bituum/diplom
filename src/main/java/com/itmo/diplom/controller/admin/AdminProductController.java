@@ -55,7 +55,7 @@ public class AdminProductController {
                                 @ModelAttribute("newProductForm") @Valid ProductsEntity product,
                                 BindingResult result){
         if(result.hasErrors()){
-            //model.addAttribute("errors", result);
+            return "/admin/storage/createProduct";
         }
         productsService.save(product);
         return "redirect:/admin/storage/all";
@@ -69,11 +69,9 @@ public class AdminProductController {
     }
 
     @PostMapping("/admin/storage/edit/{id}")
-    public String editProduct(Model model,
-                              @ModelAttribute("editProductForm") @Valid ProductsEntity product,
+    public String editProduct(@ModelAttribute("editProductForm") @Valid ProductsEntity product,
                               BindingResult result){
         if(result.hasErrors()){
-            //model.addAttribute("errors", result);
             return "admin/storage/changeProduct";
         }
         productsService.save(product);
