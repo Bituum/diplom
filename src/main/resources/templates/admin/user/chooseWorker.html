@@ -9,52 +9,25 @@
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
-<form method="post" th:action="${'/admin/menu/create'}">
+<form method="post" th:action="${'/admin/time_manager'}">
 
     <!--INPUT FIELDS-->
     <div class="row">
-        <div class="col">
-
-            <!--CATALOG FIELDS-->
-            <div>
-                <div class="row">
-                    <div class="col form-group">
-                        <label for="catalogOne">Название</label>
-                        <input th:value="${nameOfDish}" name="name" type="text" class="form-control" id="catalogOne">
-                    </div>
-                    <div class="col form-group">
-                        <label for="catalogName">Время приготовления</label>
-                        <input th:value="${timeToCooking}" name="time" type="text" class="form-control"
-                               id="catalogName">
-                    </div>
-                    <div class="col form-group" style="display: none">
-                        <label for="idname">Time to Cook</label>
-                        <input th:value="${lastId+1}" name="id" type="text" class="form-control" id="idname">
-                    </div>
-                </div>
+        <div id="dishList">
+            <div class="row">
+                <div class="col form-group d-none">id</div>
+                <div class="col form-group"></div>
+                <div class="col form-group"></div>
             </div>
-            <!--LIST OF MOVIES-->
-            <div id="dishList">
-                <div class="row">
-                    <div class="col form-group d-none">id</div>
-                    <div class="col form-group">Продукт</div>
-                    <div class="col form-group">Количество</div>
-                </div>
-                <div class="row item" th:each="products, status : ${dishAttr.productsEntity}">
-
-                    <!--<select th:field="*{productsEntity[__${status.index}__].id}">
-                        <option></option>
-                    </select>-->
-
-                </div>
+            <!--<div class="row item" th:each="products, status : ${dishAttr.productsEntity}">-->
             </div>
         </div>
     </div>
-
+    <div>
     <!--ADD NEW ROW BUTTON-->
     <div class="inline">
-        <button type="button" class="btn btn-success" onclick="addRow()">Добавить продукт</button>
-        <button type="submit" class="btn btn-primary">Создать</button>
+        <button type="button" class="btn btn-success" onclick="addRow()">Добавить пользователя</button>
+        <button type="submit" class="btn btn-primary">Начать смену</button>
     </div>
     </div>
 </form>
@@ -62,8 +35,8 @@
 
 <script type="text/javascript" th:inline="javascript">
     let addRow = function () {
-        let listName = [[${listOfProducts}]]; //id
-        let listStr = [[${listStr}]];//text
+        let listName = [[${allUsersID}]]; //id
+        let listStr = [[${strUser}]];//text
         let fieldsNames = ['id', 'productsEntity', 'counterOrder'];
         let rowIndex = document.querySelectorAll('.item').length;
         let selectList = document.createElement("select");

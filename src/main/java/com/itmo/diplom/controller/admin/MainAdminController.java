@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainAdminController {
@@ -143,7 +144,15 @@ public class MainAdminController {
         return "redirect:/admin/users/all";
     }
     @GetMapping("/admin/time_manager")
+    public String showTime(Model model){
+        model.addAttribute("allUsersID", userService.getAllUser().stream().map(UserEntity::getId).collect(Collectors.toList()));
+        model.addAttribute("strUser", userService.getAllUser().stream().map(x -> x.getLogin()).collect(Collectors.toList()));
+        return "/admin/user/chooseWorker";
+    }
+
+    @PostMapping("/admin/time_manager")
     public String showTime(){
-        return "/admin/user/showTime";
+
+        return "redirect:/main";
     }
 }
