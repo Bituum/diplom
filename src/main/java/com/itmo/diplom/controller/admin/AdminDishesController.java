@@ -56,7 +56,7 @@ public class AdminDishesController {
     }
 
     @GetMapping("/admin/")
-    public String showAllDish(Model model){
+    public String showAllDish(Model model) {
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
         return "admin/user/greeting";
     }
@@ -64,18 +64,18 @@ public class AdminDishesController {
 
     @GetMapping("/admin/menu/{id}")
     public String showDish(Model model,
-                              @PathVariable("id") int id
-    ){
+                           @PathVariable("id") int id
+    ) {
         model.addAttribute("menuForm", dishesService.getDishesEntity(id));
         return "admin/menu/oneDish";
     }
 
     @GetMapping("/admin/menu/create")
     public String createDish(Model model,
-                             @ModelAttribute("dishAttr") DishesEntity dishesEntity){
+                             @ModelAttribute("dishAttr") DishesEntity dishesEntity) {
         List<Integer> listI = new ArrayList<>();
         List<String> listStr = new ArrayList<>();
-        for(ProductsEntity p : productsService.getAllProductsEntities()){
+        for (ProductsEntity p : productsService.getAllProductsEntities()) {
             listI.add(p.getId());
             listStr.add(p.getProductDescription());
         }
@@ -91,12 +91,12 @@ public class AdminDishesController {
 
     @PostMapping("/admin/menu/create")
     public String createDish(Model model,
-                                @RequestParam(value = "id") String id,
-                                @RequestParam(value = "name")
-                                 @Size(min=1, max = 50, message = "Название продукта должно быть больше 1 и меньше 50") String name,
-                                @RequestParam(value = "time") String time,
-                                @RequestParam(value = "myParam[]", required = false) List<String> idp,
-                                @RequestParam(value = "myAmount[]", required = false) List<Integer> amount) throws ParseException {
+                             @RequestParam(value = "id") String id,
+                             @RequestParam(value = "name")
+                             @Size(min = 1, max = 50, message = "Название продукта должно быть больше 1 и меньше 50") String name,
+                             @RequestParam(value = "time") String time,
+                             @RequestParam(value = "myParam[]", required = false) List<String> idp,
+                             @RequestParam(value = "myAmount[]", required = false) List<Integer> amount) throws ParseException {
 
         DishesEntity d = new DishesEntity();
         d.setId(Integer.getInteger(id));
@@ -104,16 +104,16 @@ public class AdminDishesController {
         d.setTimeToCooking(timeChanger(time));
         dishesService.save(d);
         List<ProductsEntity> entityList = new ArrayList<>();
-        for(int i = 0; i < idp.size(); i++){
+        for (int i = 0; i < idp.size(); i++) {
             ProductsEntity tmp = productsService.getProductsEntity(productsRepository.findByProductDescription(idp.get(i)).get().getId());
             entityList.add(tmp);
         }
         d.setProductsEntity(entityList);
         dishesService.save(d);
-        for(int i = 0; i < amount.size(); i++){
+        for (int i = 0; i < amount.size(); i++) {
             repository.insertCounterOrder(amount.get(i), d.getId());
-            logger.info("amount is "+amount.get(i));
-            logger.info("dish id is "+d.getId());
+            logger.info("amount is " + amount.get(i));
+            logger.info("dish id is " + d.getId());
             logger.info("INSERT HAS BEEN INSERTED");
         }
         return "redirect:/admin/";
@@ -121,43 +121,40 @@ public class AdminDishesController {
 
     @GetMapping("/admin/menu/edit/{id}")
     public String editDish(@PathVariable("id") int id,
-                              Model model){
+                           Model model) {
         model.addAttribute("editMenuForm", dishesService.getDishesEntity(id));
         return "admin/menu/changeMenu";
     }
 
     @PostMapping("/admin/menu/edit/{id}")
     public String editDish(Model model,
-                              @ModelAttribute("editMenuForm") @Valid DishesEntity dish,
-                              BindingResult result){
-        if(result.hasErrors()){
+                           @ModelAttribute("editMenuForm") @Valid DishesEntity dish,
+                           BindingResult result) {
+        if (result.hasErrors()) {
             return "admin/menu/changeMenu";
         }
         dishesService.save(dish);
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
 
 
     @PostMapping("/admin/make_order/{id}")
     public String makeOrder(Model model,
                             @PathVariable("id") int id
-    ){
-        try {
-            if (!dishesService.makeAnOrder(id)) {
-                model.addAttribute("productError", 1);
-                return "admin/user/greeting";
-            }
-        }catch (IllegalArgumentException exception) {
+    )
+    {
+        if (!dishesService.makeAnOrder(id)) {
             model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
             model.addAttribute("amountError", 1);
-            return  "admin/user/greeting";
+            return "admin/user/greeting";
         }
-            return "redirect:/admin/";
-        }
+
+        return "redirect:/admin/";
+    }
 
 
     @PostMapping("/admin/menu/delete/{id}")
-    public String deleteDish(@PathVariable("id") int dishId){
+    public String deleteDish(@PathVariable("id") int dishId) {
         dishesService.deleteDishesEntity(dishId);
         return "redirect:/admin/";
     }

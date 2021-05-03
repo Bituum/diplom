@@ -44,7 +44,7 @@ public class UserPropertiesEntity{
 
     @Basic
     @Column(name = "salary", nullable = true)
-    @Negative(message = "Запралта не может быть меньше 0!")
+
     private Integer salary;
 
     @OneToOne(fetch = FetchType.EAGER)

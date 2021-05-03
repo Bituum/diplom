@@ -23,7 +23,13 @@ public class DishesServiceImpl implements DishesService{
     @Autowired
     private ProductsRepository productsRepository;
 
+    @Autowired
+    private ProductsServiceImpl productsService;
+
     private static Logger logger = Logger.getLogger(DishesServiceImpl.class.getName());
+
+
+
 
     @Override
     public List<DishesEntity> getAllDishesEntities() {
@@ -67,7 +73,7 @@ public class DishesServiceImpl implements DishesService{
                     //TODO 2nd: rafact this to java 8 this stream api and lambda
                     amountOfProduct--;
                     if(amountOfProduct == 0){
-                        throw new IllegalArgumentException("zero product");
+                        return false;
                     }
                 }
                 counterCounterOrder++;
@@ -76,6 +82,7 @@ public class DishesServiceImpl implements DishesService{
             for(ProductsEntity l : list){
                 l.getProductProperties().setAmount(amountOfProduct);
             }
+
             dishesRepository.save(dish);
             return true;
         }

@@ -143,16 +143,24 @@ public class MainAdminController {
         //TODO: make try catch
         return "redirect:/admin/users/all";
     }
-    @GetMapping("/admin/time_manager")
-    public String showTime(Model model){
+
+    @GetMapping("admin/time_manager")
+    public String showTime(){
+        return "/admin/user/showTime";
+    }
+
+    @GetMapping("/admin/time_manager/choose")
+    public String chooseUsers(Model model){
         model.addAttribute("allUsersID", userService.getAllUser().stream().map(UserEntity::getId).collect(Collectors.toList()));
         model.addAttribute("strUser", userService.getAllUser().stream().map(x -> x.getLogin()).collect(Collectors.toList()));
         return "/admin/user/chooseWorker";
     }
 
-    @PostMapping("/admin/time_manager")
-    public String showTime(){
+    @PostMapping("/admin/time_manager/choose")
+    public String chooseUsers(){
 
         return "redirect:/main";
     }
+
+
 }

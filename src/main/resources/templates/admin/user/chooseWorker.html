@@ -27,7 +27,8 @@
     <!--ADD NEW ROW BUTTON-->
     <div class="inline">
         <button type="button" class="btn btn-success" onclick="addRow()">Добавить пользователя</button>
-        <button type="submit" class="btn btn-primary">Начать смену</button>
+        <!--<button type="submit" class="btn btn-primary">Начать смену</button>-->
+        <a type="button" class="btn btn-primary" th:href="@{/admin/}">Начать смену</a>
     </div>
     </div>
 </form>
@@ -68,8 +69,11 @@
                 }
                 col.appendChild(selectList);
                 row.appendChild(col);
+                let br = document.createElement("br");
+                col.appendChild(br);
+                row.appendChild(col);
             }
-            if (fieldName === 'counterOrder') {
+            /*if (fieldName === 'counterOrder') {
                 let input = document.createElement('input');
 
                 input.type = 'text';
@@ -80,7 +84,7 @@
                 let br = document.createElement("br");
                 col.appendChild(br);
                 row.appendChild(col);
-            }
+            }*/
         });
 
         document.getElementById('dishList').appendChild(row);

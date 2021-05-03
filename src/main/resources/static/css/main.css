@@ -2,7 +2,7 @@
     top: 5%;
     float: right;
     position: relative;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 #editButton{
@@ -64,4 +64,21 @@
     clear: both;
     padding-right: 10%;
     padding-left: 10%;
+}
+
+.work-time{
+    position: absolute;
+    bottom: 0;
+}
+.container-fluid{
+    position: absolute;
+    bottom: 0;
+}
+
+
+
+.logout-button{
+    position: relative;
+    right: 8%;
+    padding-bottom: 4px;
 }

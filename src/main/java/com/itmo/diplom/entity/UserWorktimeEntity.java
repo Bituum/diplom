@@ -31,4 +31,7 @@ public class UserWorktimeEntity{
     @JoinColumn(name = "user_id")
     private UserEntity userok;
 
+    @Transient
+    private boolean doesHeWork = false;
+
 }

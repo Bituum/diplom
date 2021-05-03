@@ -37,7 +37,7 @@ public class GreetingController {
     @GetMapping("/")
     public String showAllDish(Model model){
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
-        return "regular/greeting";
+        return "/regular/greeting";
     }
     /*@GetMapping("/admin/menu")
     public String showAllMenu(Model model){
