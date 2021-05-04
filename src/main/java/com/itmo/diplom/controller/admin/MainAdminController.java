@@ -4,6 +4,8 @@ import com.itmo.diplom.entity.UserEntity;
 import com.itmo.diplom.entity.UserPropertiesEntity;
 import com.itmo.diplom.service.UserPropertiesServiceImpl;
 import com.itmo.diplom.service.UserServiceImpl;
+import com.itmo.diplom.service.UserWorktimeService;
+import com.itmo.diplom.service.UserWorktimeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class MainAdminController {
 
     @Autowired
     private UserPropertiesServiceImpl userPropertiesService;
+
+    @Autowired
+    private UserWorktimeServiceImpl userWorktimeService;
 
 //    @GetMapping("/admin")
 //    public String mainPanel(){
@@ -145,7 +150,8 @@ public class MainAdminController {
     }
 
     @GetMapping("admin/time_manager")
-    public String showTime(){
+    public String showTime(Model model){
+        model.addAttribute("workers", userWorktimeService.getAllUserWorkTime());
         return "/admin/user/showTime";
     }
 
