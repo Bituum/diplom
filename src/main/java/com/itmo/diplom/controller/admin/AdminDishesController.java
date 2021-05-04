@@ -7,6 +7,7 @@ import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductPropertiesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
+import com.itmo.diplom.util.InitActiveDishes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminDishesController {
@@ -36,6 +38,7 @@ public class AdminDishesController {
     private static Logger logger = Logger.getLogger(AdminDishesController.class.getName());
 
     private boolean hasError;
+
     @Autowired
     private DishesServiceImpl dishesService;
 
@@ -51,6 +54,12 @@ public class AdminDishesController {
     @Autowired
     private ProductPropertiesServiceImpl propertiesService;
 
+    private void initActiveDishes(Model model){
+        new InitActiveDishes().setDishesService(dishesService);
+        model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
+        logger.info("Count of active dishes = " + dishesService.getAllDishesEntities().stream().map(DishesEntity::isActive).collect(Collectors.toList()));
+    }
+
     private LocalTime timeChanger(String str) throws ParseException {
         return LocalTime.parse(str);
     }
@@ -58,6 +67,7 @@ public class AdminDishesController {
     @GetMapping("/admin/")
     public String showAllDish(Model model) {
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
+        initActiveDishes(model);
         return "admin/user/greeting";
     }
 

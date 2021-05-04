@@ -61,7 +61,6 @@ public class DishesServiceImpl implements DishesService{
         DishesEntity dish;
         if(optional.isPresent()){
             dish = optional.get();
-            dish.initActive();
             List<ProductsEntity> list = dish.getProductsEntity();
 
             List<Integer> counterList = dishesRepository.findCounterOrder(dish.getId());
@@ -78,6 +77,7 @@ public class DishesServiceImpl implements DishesService{
                 }
                 counterCounterOrder++;
             }
+            dish.setIsActive(true);
 
             for(ProductsEntity l : list){
                 l.getProductProperties().setAmount(amountOfProduct);

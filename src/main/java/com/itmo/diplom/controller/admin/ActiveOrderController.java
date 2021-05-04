@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class ActiveOrderController {
 
-    @GetMapping("/active")
+    @GetMapping("/active_orders")
     public String showAllActiveOrders(){
 
+
+        return "/admin/special/activeOrders";
     }
 }

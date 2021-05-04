@@ -107,10 +107,22 @@ body{
     text-align: center;
 }
 
-#active-orders{
+#active-orders1{
     position: absolute;
     top: 20%;
-    border-radius: 100%;
+    border: 1px solid;
+    border-radius: 50%;
+    background-color: #FFC000;
+    text-align: center;
+    line-height: 10px;
+    display: inline-block;
+    color: black;
+}
+
+#active-orders2{
+    position: absolute;
+    top: 20%;
+    border-radius: 50%;
     background-color: #FFC000;
     text-align: center;
     line-height: 10px;

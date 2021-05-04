@@ -22,14 +22,11 @@ public class DishesEntity{
     @Column(name = "name_of_dish", nullable = false)
     @NotNull
     private String nameOfDish;
-
     //Count of active orders
-    @Transient
-    private int isActive = 0;
+    @Basic
+    @Column(name = "is_active")
+    private boolean isActive;
 
-    public void initActive(){
-        isActive++;
-    }
 
     @Basic
     @Column(name = "time_to_cooking")
@@ -42,4 +39,7 @@ public class DishesEntity{
     )
     private List<ProductsEntity> productsEntity;
 
+    public void setIsActive(boolean b) {
+        isActive = b;
+    }
 }
