@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -21,11 +22,11 @@ public class UserWorktimeEntity{
     @Basic
     @Column(name = "start_time", nullable = false)
     @NotNull
-    private Time startTime;
+    private LocalTime startTime;
     @Basic
     @Column(name = "end_time", nullable = false)
-    @NotNull
-    private Time endTime;
+
+    private LocalTime endTime;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
@@ -34,4 +35,11 @@ public class UserWorktimeEntity{
     @Transient
     private boolean doesHeWork = false;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

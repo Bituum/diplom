@@ -31,6 +31,7 @@ public class DishesEntity{
     @Basic
     @Column(name = "time_to_cooking")
     private LocalTime timeToCooking;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
     @Nullable
     @JoinTable(name = "product_dishes",

@@ -56,5 +56,10 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    public UserEntity findUsernameByLogin(String login){
+        return userRepository.findByLogin(login).orElseThrow(
+                IllegalArgumentException::new
+        );
+    }
 
 }

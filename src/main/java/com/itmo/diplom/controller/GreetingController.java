@@ -7,6 +7,7 @@ import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.repository.ProductsRepository;
 import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
+import com.itmo.diplom.util.InitActiveDishes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,15 @@ public class GreetingController {
     @Autowired
     private ProductsRepository productsRepository;
 
+    private void initActiveDishes(Model model){
+        new InitActiveDishes().setDishesService(dishesService);
+        model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
+    }
 
     @GetMapping("/")
     public String showAllDish(Model model){
         model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
+        initActiveDishes(model);
         return "/regular/greeting";
     }
     /*@GetMapping("/admin/menu")

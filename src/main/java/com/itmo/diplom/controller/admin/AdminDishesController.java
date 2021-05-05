@@ -57,7 +57,6 @@ public class AdminDishesController {
     private void initActiveDishes(Model model){
         new InitActiveDishes().setDishesService(dishesService);
         model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
-        logger.info("Count of active dishes = " + dishesService.getAllDishesEntities().stream().map(DishesEntity::isActive).collect(Collectors.toList()));
     }
 
     private LocalTime timeChanger(String str) throws ParseException {
@@ -77,6 +76,7 @@ public class AdminDishesController {
                            @PathVariable("id") int id
     ) {
         model.addAttribute("menuForm", dishesService.getDishesEntity(id));
+        initActiveDishes(model);
         return "admin/menu/oneDish";
     }
 
@@ -96,6 +96,7 @@ public class AdminDishesController {
         model.addAttribute("listOfProducts", listI);
         model.addAttribute("listStr", listStr);
         model.addAttribute("fullList", dishesService.getAllDishesEntities());
+        initActiveDishes(model);
         return "admin/menu/createDish";
     }
 
@@ -133,6 +134,7 @@ public class AdminDishesController {
     public String editDish(@PathVariable("id") int id,
                            Model model) {
         model.addAttribute("editMenuForm", dishesService.getDishesEntity(id));
+        initActiveDishes(model);
         return "admin/menu/changeMenu";
     }
 

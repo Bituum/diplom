@@ -9,26 +9,43 @@
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
-    <!--timer part-->
-    <div class="timer">
-        <h1>Активные смены</h1>
-        <div th:if="${not #lists.isEmpty(workers)}">
-            <h2 style="color: crimson">Сейчас нет активных смен!</h2>
-        </div>
+<!--timer part-->
+<div class="timer">
+    <h1>Активные смены</h1>
+    <div th:if="${not #lists.isEmpty(workers)}">
+        <h2 style="color: crimson">Сейчас нет активных смен!</h2>
     </div>
+    <table class="table">
+        <thead class="table">
+        <tr>
+            <th scope="col">Пользователь</th>
+            <th scope="col">Прошедшее время</th>
+        </tr>
+        </thead>
+        <div th:each="timer : ${workers}">
+            <tbody>
+            <tr>
+                <td th:text="${}">login</td>
+                <td th:text="${timer.endTime}">role</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </div>
+    </table>
+</div>
 
 
-    <!--buttons-->
-    <div class="container-fluid">
-        <div class="row">
-            <a type="button" class="btn btn-outline-success" th:href="@{/admin/time_manager/choose}">Начать смену</a>
-        </div>
-        <div class="row">
-            <a type="button" class="btn btn-outline-danger">Остановить смену</a>
-        </div>
-        <div class="row">
-            <a type="button" class="btn btn-outline-info">Сбросить время</a>
-        </div>
+<!--buttons-->
+<div class="container-fluid">
+    <div class="row">
+        <a type="button" class="btn btn-outline-success" th:href="@{/admin/time_manager/choose}">Начать смену</a>
+    </div>
+    <div class="row">
+        <a type="button" class="btn btn-outline-danger">Остановить смену</a>
+    </div>
+    <div class="row">
+        <a type="button" class="btn btn-outline-info">Сбросить время</a>
+    </div>
 </div>
 </body>
 </html>

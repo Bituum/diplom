@@ -3,8 +3,10 @@ package com.itmo.diplom.controller.admin;
 import com.itmo.diplom.entity.ProductPropertiesEntity;
 import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.repository.ProductsRepository;
+import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductPropertiesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
+import com.itmo.diplom.util.InitActiveDishes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +30,20 @@ public class AdminProductController {
     private ProductPropertiesServiceImpl propertiesService;
 
     @Autowired
+    private DishesServiceImpl dishesService;
+
+    @Autowired
     private ProductsRepository repository;
+
+    private void initActiveDishes(Model model){
+        new InitActiveDishes().setDishesService(dishesService);
+        model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
+    }
 
     @GetMapping("admin/storage/all")
     public String showAllProduct(Model model){
         model.addAttribute("productsForm", productsService.getAllProductsEntities());
+        initActiveDishes(model);
         return "admin/storage/showAll";
     }
 
@@ -41,12 +52,14 @@ public class AdminProductController {
                               @PathVariable("id") int id
                               ){
         model.addAttribute("productForm", propertiesService.getProductPropertiesEntity(id));
+        initActiveDishes(model);
         return "admin/storage/oneProduct";
     }
 
     @GetMapping("/admin/storage/create")
     public String createProduct(Model model){
         model.addAttribute("newProductForm", new ProductsEntity());
+        initActiveDishes(model);
         return "admin/storage/createProduct";
     }
 
@@ -65,6 +78,7 @@ public class AdminProductController {
     public String editProduct(@PathVariable("id") int id,
                               Model model){
         model.addAttribute("editProductForm", productsService.getProductsEntity(id));
+        initActiveDishes(model);
         return "admin/storage/changeProduct";
     }
 
@@ -83,11 +97,13 @@ public class AdminProductController {
                                         @PathVariable("id") int id){
         try {
             model.addAttribute("productForm", propertiesService.getProductPropertiesEntity(id));
+            initActiveDishes(model);
             logger.info("product property has been loaded                           [OK]");
             return "admin/storage/oneProduct";
         }catch (IllegalArgumentException empty){
             model.addAttribute("pid", id);
             model.addAttribute("editProductProperties", new ProductPropertiesEntity());
+            initActiveDishes(model);
             return "admin/storage/editProductProperty";
         }
     }
@@ -99,6 +115,7 @@ public class AdminProductController {
         model.addAttribute("pid", id);
         logger.info("id is ==   [" +id+"]");
         model.addAttribute("editProductProperties", propertiesService.getProductPropertiesEntity(id));
+        initActiveDishes(model);
         return "admin/storage/editProductProperty";
     }
 

@@ -1,11 +1,11 @@
 package com.itmo.diplom.controller.admin;
 
+import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.entity.UserEntity;
 import com.itmo.diplom.entity.UserPropertiesEntity;
-import com.itmo.diplom.service.UserPropertiesServiceImpl;
-import com.itmo.diplom.service.UserServiceImpl;
-import com.itmo.diplom.service.UserWorktimeService;
-import com.itmo.diplom.service.UserWorktimeServiceImpl;
+import com.itmo.diplom.entity.UserWorktimeEntity;
+import com.itmo.diplom.service.*;
+import com.itmo.diplom.util.InitActiveDishes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,6 +30,9 @@ public class MainAdminController {
 
     @Autowired
     private UserWorktimeServiceImpl userWorktimeService;
+
+    @Autowired
+    private DishesServiceImpl dishesService;
 //    @GetMapping("/admin")
 //    public String mainPanel(){
 //        return "admin/user/greeting";
@@ -37,14 +44,25 @@ public class MainAdminController {
          return "admin/oneUser";
     }*/
 
+    private LocalTime timeChanger(String str) throws ParseException {
+        return LocalTime.parse(str);
+    }
+
+    private void initActiveDishes(Model model){
+        new InitActiveDishes().setDishesService(dishesService);
+        model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
+    }
+
     @GetMapping("admin/users/all")
     public String getAllUsers(Model model){
         model.addAttribute("users", userService.getAllUser());
+        initActiveDishes(model);
         return "admin/user/showAll";
     }
     @GetMapping("admin/users/edit/{id}")
     public String changeUser(Model model, @PathVariable("id") int userId){
         model.addAttribute("userForm", userService.getUser(userId));
+        initActiveDishes(model);
         return "admin/user/changeUser";
     }
     @PostMapping("/admin/users/edit/{id}")
@@ -69,6 +87,7 @@ public class MainAdminController {
     @GetMapping("/admin/users/registration")
     public String registration(Model model){
         model.addAttribute("userForm", new UserEntity());
+        initActiveDishes(model);
         return "admin/user/registration";
     }
 
@@ -91,11 +110,12 @@ public class MainAdminController {
             model.addAttribute("pid", id);
             UserPropertiesEntity userProperties = userPropertiesService.getUserProperty(id);
             model.addAttribute("propertyForm", userProperties);
+            initActiveDishes(model);
             return "admin/user/oneUser";
         }catch (IllegalArgumentException empty){
             model.addAttribute("newPropertyForm", new UserPropertiesEntity());
             System.out.println("bag of d**cks");
-
+            initActiveDishes(model);
             return "admin/user/newUserProperty";
         }
     }
@@ -124,11 +144,13 @@ public class MainAdminController {
             model.addAttribute("pid", id);
             model.addAttribute("newPropertyForm", userPropertiesService.getUserProperty(id));
             System.out.println("YAY");
+            initActiveDishes(model);
         }
         else
         {
             model.addAttribute("newPropertyForm", new UserPropertiesEntity());
             System.out.println("Bag of d**ks");
+            initActiveDishes(model);
         }
         return "admin/user/newUserProperty";
     }
@@ -151,18 +173,42 @@ public class MainAdminController {
     @GetMapping("admin/time_manager")
     public String showTime(Model model){
         model.addAttribute("workers", userWorktimeService.getAllUserWorkTime());
+        //TODO цикл по пользователям, которые сейчас на смене и передать время этихх работников
+        initActiveDishes(model);
         return "/admin/user/showTime";
     }
 
     @GetMapping("/admin/time_manager/choose")
     public String chooseUsers(Model model){
+        List<Integer> listI = new ArrayList<>();
+
+        for (UserEntity u : userService.getAllUser()) {
+            listI.add(u.getId());
+        }
+
         model.addAttribute("allUsersID", userService.getAllUser().stream().map(UserEntity::getId).collect(Collectors.toList()));
         model.addAttribute("strUser", userService.getAllUser().stream().map(x -> x.getLogin()).collect(Collectors.toList()));
+        initActiveDishes(model);
         return "/admin/user/chooseWorker";
     }
 
     @PostMapping("/admin/time_manager/choose")
-    public String chooseUsers(){
+    public String chooseUsers(@RequestParam(value = "myParam[]") List<String> ids) throws ParseException {
+        //TODO достать -> запихнуть
+        for (String id : ids) {
+            var userw = new UserWorktimeEntity();
+            userw = userWorktimeService.getUserWorkTime(Integer.parseInt(id));
+            try {
+                userw.setId(Integer.parseInt(id));
+                //userw.setStartTime(timeChanger(startTime.get(Integer.parseInt(id))));
+
+                //TODO START THE TIME
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            userWorktimeService.save(userw);
+        }
+
 
         return "redirect:/main";
     }
