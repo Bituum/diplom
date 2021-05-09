@@ -4,6 +4,7 @@ import com.itmo.diplom.entity.ProductsEntity;
 import com.itmo.diplom.entity.UserEntity;
 import com.itmo.diplom.entity.UserPropertiesEntity;
 import com.itmo.diplom.entity.UserWorktimeEntity;
+import com.itmo.diplom.repository.UserRepository;
 import com.itmo.diplom.service.*;
 import com.itmo.diplom.util.InitActiveDishes;
 import com.itmo.diplom.util.StopWatch;
@@ -50,10 +51,6 @@ public class MainAdminController {
 
     private LocalTime timeChanger(String str) throws ParseException {
         return LocalTime.parse(str);
-    }
-
-    private LocalTime zeroTime(){
-        return LocalTime.ofNanoOfDay(0);
     }
 
     private void initActiveDishes(Model model){
@@ -242,6 +239,13 @@ public class MainAdminController {
 
         return "redirect:/admin/time_manager";
     }
+
+    @PostMapping("/admin/time_manager/void")
+    public String clearTime(){
+        userWorktimeService.deleteAllUserWorkTime();
+        return "redirect:/admin/time_manager";
+    }
+
 
 
 }

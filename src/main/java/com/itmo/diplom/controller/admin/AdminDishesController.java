@@ -158,6 +158,7 @@ public class AdminDishesController {
         if (!dishesService.makeAnOrder(id)) {
             model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
             model.addAttribute("amountError", 1);
+            initActiveDishes(model);
             return "admin/user/greeting";
         }
 

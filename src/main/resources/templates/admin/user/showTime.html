@@ -40,12 +40,11 @@
     <div class="row">
         <a type="button" class="btn btn-outline-success" th:href="@{/admin/time_manager/choose}">Начать смену</a>
     </div>
+    <form th:action="@{/admin/time_manager/void}" method="post">
     <div class="row">
-        <a type="button" class="btn btn-outline-danger">Остановить смену</a>
+        <button type="submit" class="btn btn-outline-info">Сбросить время</button>
     </div>
-    <div class="row">
-        <a type="button" class="btn btn-outline-info">Сбросить время</a>
-    </div>
+    </form>
 </div>
 </body>
 </html>

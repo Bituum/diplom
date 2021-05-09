@@ -25,11 +25,17 @@ public class UserWorktimeServiceImpl implements UserWorktimeService{
 
     @Override
     public UserWorktimeEntity getUserWorkTime(int id) {
-        return null;
+        return userWorktimeRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("not found")
+        );
     }
 
     @Override
     public void deleteUserWorkTime(int id) {
+        userWorktimeRepository.deleteById(id);
+    }
 
+    public void deleteAllUserWorkTime(){
+        userWorktimeRepository.deleteAll();
     }
 }

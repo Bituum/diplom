@@ -61,5 +61,4 @@ public class UserServiceImpl implements UserService {
                 IllegalArgumentException::new
         );
     }
-
 }
