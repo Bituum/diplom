@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserWorktimeService {
     List<UserWorktimeEntity> getAllUserWorkTime();
-    boolean save(UserWorktimeEntity userWorkTime);
+    void save(UserWorktimeEntity userWorkTime);
     UserWorktimeEntity getUserWorkTime(int id);
     void deleteUserWorkTime(int id);
 }

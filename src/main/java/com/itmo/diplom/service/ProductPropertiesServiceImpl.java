@@ -30,13 +30,9 @@ public class ProductPropertiesServiceImpl implements ProductPropertiesService{
     public boolean save(ProductPropertiesEntity productProperties) {
         Optional<ProductsEntity> product = productsRepository.findById(productProperties.getProductsId());
         if(product.isPresent()){
-            logger.info("ive enterned to the method save product properties");
             ProductsEntity productsTmp = product.get();
-            logger.info("productTmp   ==     " +productsTmp);
             productsTmp.setProductProperties(productProperties);
-            logger.info("ProductsTmp productProperties id ==      " + productsTmp.getProductProperties().getProductsId());
             productProperties.setProduct(productsTmp);
-            logger.info("product properties product" +productProperties.getProduct());
             productsRepository.save(productsTmp);
             return true;
         }else{

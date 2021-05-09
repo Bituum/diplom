@@ -6,6 +6,7 @@ import com.itmo.diplom.entity.UserPropertiesEntity;
 import com.itmo.diplom.entity.UserWorktimeEntity;
 import com.itmo.diplom.service.*;
 import com.itmo.diplom.util.InitActiveDishes;
+import com.itmo.diplom.util.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,6 +35,8 @@ public class MainAdminController {
 
     @Autowired
     private DishesServiceImpl dishesService;
+
+    private static Logger logger = Logger.getLogger(MainAdminController.class.getName());
 //    @GetMapping("/admin")
 //    public String mainPanel(){
 //        return "admin/user/greeting";
@@ -46,6 +50,10 @@ public class MainAdminController {
 
     private LocalTime timeChanger(String str) throws ParseException {
         return LocalTime.parse(str);
+    }
+
+    private LocalTime zeroTime(){
+        return LocalTime.ofNanoOfDay(0);
     }
 
     private void initActiveDishes(Model model){
@@ -172,7 +180,33 @@ public class MainAdminController {
 
     @GetMapping("admin/time_manager")
     public String showTime(Model model){
+        List<UserWorktimeEntity> currentWorkTimeUsers = userWorktimeService.getAllUserWorkTime();
+        model.addAttribute("names", userService.getAllUser().stream().filter(x -> {
+            for (UserWorktimeEntity work : currentWorkTimeUsers) {
+                if(work.getId().equals(x.getId())){
+                    return true;
+                }
+            }
+            return false;
+        })
+                .map(UserEntity::getLogin)
+                .collect(Collectors.toList()));
+
+
         model.addAttribute("workers", userWorktimeService.getAllUserWorkTime());
+        List<UserWorktimeEntity> list = userWorktimeService.getAllUserWorkTime();
+        List<LocalTime> currentTimes = new ArrayList<>();
+        StopWatch watch = new StopWatch();
+        for(UserWorktimeEntity worktimeEntity : list){
+            LocalTime time = worktimeEntity.getStartTime();
+
+            logger.info("START TIME IN SECONDS -----> " + time.toSecondOfDay());
+            long tmpSeconds = time.toSecondOfDay();
+            logger.info("TMP TIME IN SECONDS -----> " + tmpSeconds);
+            currentTimes.add(watch.getElapsedTime(tmpSeconds));
+        }
+        model.addAttribute("currentTime", currentTimes);
+
         //TODO цикл по пользователям, которые сейчас на смене и передать время этихх работников
         initActiveDishes(model);
         return "/admin/user/showTime";
@@ -196,21 +230,17 @@ public class MainAdminController {
     public String chooseUsers(@RequestParam(value = "myParam[]") List<String> ids) throws ParseException {
         //TODO достать -> запихнуть
         for (String id : ids) {
+            UserEntity user = userService.getUser(userService.findUsernameByLogin(id).getId());
             var userw = new UserWorktimeEntity();
-            userw = userWorktimeService.getUserWorkTime(Integer.parseInt(id));
-            try {
-                userw.setId(Integer.parseInt(id));
-                //userw.setStartTime(timeChanger(startTime.get(Integer.parseInt(id))));
-
-                //TODO START THE TIME
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            userWorktimeService.save(userw);
+            userw.setId(userService.findUsernameByLogin(id).getId());
+            userw.setStartTime(LocalTime.now());
+            // userw = userWorktimeService.getUserWorkTime(Integer.parseInt(id));
+            user.setUserWorktime(userw);
+            userw.setUserok(user);
+            userService.save(user);
         }
 
-
-        return "redirect:/main";
+        return "redirect:/admin/time_manager";
     }
 
 

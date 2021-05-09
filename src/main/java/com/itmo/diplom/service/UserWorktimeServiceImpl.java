@@ -19,8 +19,8 @@ public class UserWorktimeServiceImpl implements UserWorktimeService{
     }
 
     @Override
-    public boolean save(UserWorktimeEntity userWorkTime) {
-        return false;
+    public void save(UserWorktimeEntity userWorkTime) {
+        userWorktimeRepository.save(userWorkTime);
     }
 
     @Override

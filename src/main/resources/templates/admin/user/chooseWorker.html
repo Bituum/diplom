@@ -9,7 +9,7 @@
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
-<form method="post" th:action="${'/admin/time_manager'}">
+<form method="post" th:action="${'/admin/time_manager/choose'}">
 
     <!--INPUT FIELDS-->
     <div class="row">
@@ -26,9 +26,10 @@
     <div>
     <!--ADD NEW ROW BUTTON-->
     <div class="inline">
+        <br/>
         <button type="button" class="btn btn-success" onclick="addRow()">Добавить пользователя</button>
         <!--<button type="submit" class="btn btn-primary">Начать смену</button>-->
-        <a type="button" class="btn btn-primary" th:href="@{/admin/}">Начать смену</a>
+        <button type="submit" class="btn btn-primary">Начать смену</button>
     </div>
     </div>
 </form>
