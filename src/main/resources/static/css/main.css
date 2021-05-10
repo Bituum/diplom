@@ -92,14 +92,6 @@ body{
     bottom: 0;
 }
 
-
-
-.logout-button{
-    position: relative;
-    right: 8%;
-    padding-bottom: 4px;
-}
-
 .timer{
     margin:auto;
     width: 50%;
