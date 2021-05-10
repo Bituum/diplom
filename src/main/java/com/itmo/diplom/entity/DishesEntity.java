@@ -32,6 +32,10 @@ public class DishesEntity{
     @Column(name = "time_to_cooking")
     private LocalTime timeToCooking;
 
+    @Basic
+    @Column(name = "ordered")
+    private int ordered = 0;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
     @Nullable
     @JoinTable(name = "product_dishes",
@@ -43,4 +47,10 @@ public class DishesEntity{
     public void setIsActive(boolean b) {
         isActive = b;
     }
+
+    public void increaseOrderedCounter(){
+        ordered++;
+    }
+
+
 }

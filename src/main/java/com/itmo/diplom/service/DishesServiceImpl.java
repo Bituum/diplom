@@ -58,9 +58,11 @@ public class DishesServiceImpl implements DishesService{
         Optional<DishesEntity>  optional = dishesRepository.findById(dishId);
         int amountOfProduct = 0;
         int counterCounterOrder = 0;
+
         DishesEntity dish;
         if(optional.isPresent()){
             dish = optional.get();
+            increaseActive(dish);
             List<ProductsEntity> list = dish.getProductsEntity();
 
             List<Integer> counterList = dishesRepository.findCounterOrder(dish.getId());
@@ -87,5 +89,9 @@ public class DishesServiceImpl implements DishesService{
             return true;
         }
         return false;
+    }
+
+    private void increaseActive(DishesEntity dish){
+           dish.increaseOrderedCounter();
     }
 }
