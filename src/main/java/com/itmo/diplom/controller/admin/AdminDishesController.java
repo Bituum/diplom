@@ -132,20 +132,51 @@ public class AdminDishesController {
 
     @GetMapping("/admin/menu/edit/{id}")
     public String editDish(@PathVariable("id") int id,
-                           Model model) {
-        model.addAttribute("editMenuForm", dishesService.getDishesEntity(id));
+                           Model model,
+                           @ModelAttribute("dishAttr") DishesEntity dishesEntity) {
+        List<Integer> listI = new ArrayList<>();
+        List<String> listStr = new ArrayList<>();
+        for (ProductsEntity p : productsService.getAllProductsEntities()) {
+            listI.add(p.getId());
+            listStr.add(p.getProductDescription());
+        }
+        List<DishesEntity> listDish = new ArrayList<>();
+        listDish = dishesService.getAllDishesEntities();
+
+        model.addAttribute("lastId", listDish.get(listDish.size() - 1).getId());
+        model.addAttribute("listOfProducts", listI);
+        model.addAttribute("listStr", listStr);
+        model.addAttribute("fullList", dishesService.getDishesEntity(id));
         initActiveDishes(model);
         return "admin/menu/changeMenu";
     }
 
     @PostMapping("/admin/menu/edit/{id}")
     public String editDish(Model model,
-                           @ModelAttribute("editMenuForm") @Valid DishesEntity dish,
-                           BindingResult result) {
-        if (result.hasErrors()) {
-            return "admin/menu/changeMenu";
+                           @RequestParam(value = "id") String id,
+                           @RequestParam(value = "name") @Size(min = 1, max = 50, message = "Название продукта должно быть больше 1 и меньше 50") String name,
+                           @RequestParam(value = "time") String time,
+                           @RequestParam(value = "myParam[]", required = false) List<String> idp,
+                           @RequestParam(value = "myAmount[]", required = false) List<Integer> amount) throws ParseException {
+        DishesEntity d = new DishesEntity();
+        d.setId(Integer.getInteger(id));
+        d.setNameOfDish(name);
+        d.setTimeToCooking(timeChanger(time));
+        dishesService.save(d);
+        List<ProductsEntity> entityList = new ArrayList<>();
+        for (int i = 0; i < idp.size(); i++) {
+            ProductsEntity tmp = productsService.getProductsEntity(productsRepository.findByProductDescription(idp.get(i)).get().getId());
+            entityList.add(tmp);
         }
-        dishesService.save(dish);
+        d.setProductsEntity(entityList);
+        dishesService.save(d);
+        for (int i = 0; i < amount.size(); i++) {
+            repository.insertCounterOrder(amount.get(i), d.getId());
+            logger.info("amount is " + amount.get(i));
+            logger.info("dish id is " + d.getId());
+            logger.info("INSERT HAS BEEN INSERTED");
+        }
+        dishesService.deleteDishesEntity(d.getId()-1);
         return "redirect:/admin/";
     }
 
@@ -172,5 +203,4 @@ public class AdminDishesController {
         return "redirect:/admin/";
     }
 
-    //TODO чтобы сделать вывод всех описаний продукта у которых есть проблема, сделай через thymeleaf if property.amount == 0
 }
