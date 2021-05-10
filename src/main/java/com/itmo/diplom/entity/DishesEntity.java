@@ -52,5 +52,9 @@ public class DishesEntity{
         ordered++;
     }
 
+    public void reduceOrderedCounter(){
+        ordered--;
+    }
+
 
 }

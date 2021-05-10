@@ -12,22 +12,20 @@
 <table class="table table-hover">
     <thead class="table-dark">
     <tr>
-        <th scope="col">#</th>
         <th scope="col">Блюдо</th>
-        <th scope="col">Время готовки</th>
-        <th scope="col"></th>
+        <th scope="col">Количество заказанных блюд</th>
         <th scope="col"></th>
     </tr>
     </thead>
-    <div th:each="dish : ${dishesForm}">
+    <div th:each="dish : ${orderedDishes}">
         <tbody>
-        <tr th:style="${dish.id != 1 ? '' : 'display:none'}">
-            <th scope="row" th:text="${dish.id}">1</th>
+        <tr th:if="${dish.isActive() == true}">
             <td th:text="${dish.nameOfDish}">My Link</td>
-            <td th:text="${dish.timeToCooking}">My Link</td>
+            <td th:text="${dish.ordered}">0</td>
             <td>
-            </td>
-            <td>
+                <form th:action="@{active_orders/clear/{id}(id=${dish.id})}" method="post">
+                    <button type="submit" class="btn btn-outline-info">Завершить заказ</button>
+                </form>
             </td>
         </tr>
         </tbody>

@@ -133,7 +133,7 @@ public class AdminProductController {
         logger.info("property amount is ==   [" +product.getAmount() +"]");
         logger.info("property cost is ==   [" +product.getCost() +"]");
         if(!propertiesService.save(product)){
-            logger.info("property havent been saven                    [NOT OK]");
+            logger.info("property havent been save                    [NOT OK]");
         }
         logger.info("product                ["+ product.getProduct()+"]");
         return "redirect:/admin/storage/all";
