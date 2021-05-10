@@ -8,19 +8,21 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link" href="#">Меню</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link">Активные заказы:  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="active-orders1" th:text="${activeDish}" th:if="#{activeDish} != null" th:href="@{/admin/active_orders}">0</a>
-                        <a class="nav-link" id="active-orders2" th:text="${activeDish}" th:if="#{activeDish} == null" th:href="@{/admin/active_orders}">0</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Меню</a>
+                        <a class="nav-link" id="active-orders1" th:text="${activeDish}" th:if="#{activeDish} != null" th:href="@{/active_orders}">0</a>
+                        <a class="nav-link" id="active-orders2" th:text="${activeDish}" th:if="#{activeDish} == null" th:href="@{/active_orders}">0</a>
                     </li>
 
                 </ul>
             </div>
         </div>
-
+        <div class="logout-button" style="position:relative; right 5%; top:2%;">
+            <a type="button" th:href="@{/logout}" class="btn btn-outline-light">Выйти</a>
+        </div>
     </nav>
 </div>

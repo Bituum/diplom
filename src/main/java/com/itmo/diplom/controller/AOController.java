@@ -1,4 +1,4 @@
-package com.itmo.diplom.controller.admin;
+package com.itmo.diplom.controller;
 
 import com.itmo.diplom.entity.DishesEntity;
 import com.itmo.diplom.service.DishesServiceImpl;
@@ -9,14 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-
 
 @Controller
-@RequestMapping("/admin")
-public class ActiveOrderController {
-
+public class AOController {
     @Autowired
     private DishesServiceImpl dishesService;
 
@@ -29,11 +24,11 @@ public class ActiveOrderController {
     public String showAllActiveOrders(Model model){
         model.addAttribute("orderedDishes", dishesService.getAllDishesEntities());
         initActiveDishes(model);
-        return "/admin/special/activeOrders";
+        return "regular/special/activeOrders";
     }
 
     @PostMapping("/active_orders/clear/{id}")
-    public String clearActiveDish(@PathVariable("id") int id){
+    public String clearActiveDishes(@PathVariable("id") int id){
         DishesEntity dish = dishesService.getDishesEntity(id);
         dish.reduceOrderedCounter();
 
@@ -41,10 +36,10 @@ public class ActiveOrderController {
             dish.setIsActive(false);
             dishesService.save(dish);
             if(dishesService.getAllDishesEntities().stream().allMatch(x -> x.getOrdered() == 0)){
-                return "redirect:/admin/";
+                return "redirect:/";
             }
         }
         dishesService.save(dish);
-        return "redirect:/admin/active_orders";
+        return "redirect:/active_orders";
     }
 }

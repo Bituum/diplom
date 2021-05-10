@@ -46,4 +46,19 @@ public class GreetingController {
         return "/regular/greeting";
     }
 
+    @PostMapping("/make_order/{id}")
+    public String makeOrder(Model model,
+                            @PathVariable("id") int id
+    )
+    {
+        if (!dishesService.makeAnOrder(id)) {
+            model.addAttribute("dishesForm", dishesService.getAllDishesEntities());
+            model.addAttribute("amountError", 1);
+            initActiveDishes(model);
+            return "regular/greeting";
+        }
+
+        return "redirect:/";
+    }
+
 }

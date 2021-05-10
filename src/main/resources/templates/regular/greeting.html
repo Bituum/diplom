@@ -8,16 +8,10 @@
     <link href="/css/main.css" rel="stylesheet"/>
 </head>
 <body>
-<div th:replace="fragments/header :: headerFragment"></div>
-<div style="background-color: #212529; position: absolute; right: 10%; top: 1%">
-    <a type="button"
-       class="btn btn-outline-light"
-       th:href="@{/admin/menu/create}">Новое блюдо
-    </a>
-</div>
+<div th:replace="fragments/rHeader :: headerFragment"></div>
 <div th:style="${amountError == 1 ? '' : 'display:none'}">
     <div style="width: 100%; background-color: #212529">
-        <a type="button" class="btn btn-outline-danger" id="button-addon1" th:href="@{/admin/few_products}">НЕТ ПРОДУКТОВ!</a>
+        <a type="button" class="btn btn-outline-danger" id="button-addon1" href="#">НЕТ ПРОДУКТОВ!</a>
     </div>
 </div>
 <table class="table table-hover">
@@ -43,17 +37,17 @@
             </td>-->
             <td>
                 <div th:if="${productError} == 1" class="alert alert-primary" role="alert"></div>
-                <form th:method="POST" th:action="@{/admin/make_order/{id}(id=${dish.id})}">
+                <form th:method="POST" th:action="@{/make_order/{id}(id=${dish.id})}">
                     <button type="submit" class="btn btn-outline-success">Добавить</button>
                 </form>
             </td>
             <td>
-                <form th:method="POST"
-                      th:action="@{/admin/menu/delete/{id}(id=${dish.id})}" style="display: inline">
+      <!--          <form th:method="POST"
+                      th:action="@{/menu/delete/{id}(id=${dish.id})}" style="display: inline">
                     <button type="submit" class="btn btn-outline-danger" id="deleteButton">Удалить</button>
                 </form>
-                <a th:href="@{/admin/menu/edit/{id}(id=${dish.id})}" type="button" class="btn btn-outline-warning"
-                   id="editButton">Изменить</a>
+                <a th:href="@{/menu/edit/{id}(id=${dish.id})}" type="button" class="btn btn-outline-warning"
+                   id="editButton">Изменить</a>-->
             </td>
         </tr>
         </tbody>
