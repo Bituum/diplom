@@ -77,10 +77,7 @@ public class MainAdminController {
             //model.addAttribute("usernameError", "Username this that login is existing");
             return "admin/user/changeUser";
         }
-        if(!userService.save(userForm)){
-            //model.addAttribute("usernameError", "Username this that login is existing");
-            return "/admin/user/changeUser";
-        }
+        userService.forceSave(userForm);
         return "redirect:/admin/users/all";
     }
 
@@ -157,21 +154,30 @@ public class MainAdminController {
             System.out.println("Bag of d**ks");
             initActiveDishes(model);
         }
+        initActiveDishes(model);
         return "admin/user/newUserProperty";
     }
 
     @PostMapping("/admin/users/properties/edit/{id}")
-    public String changeUserProperties(@ModelAttribute("newPropertyForm") @Valid UserPropertiesEntity userProperties, Model model, BindingResult result, @PathVariable("id") int id){
+    public String changeUserProperties(@ModelAttribute("newPropertyForm") @Valid UserPropertiesEntity userProperties, BindingResult result, Model model, @PathVariable("id") int id){
         if(result.hasErrors()){
+            if(!userProperties.getSex().equalsIgnoreCase("м") || !userProperties.getSex().equalsIgnoreCase("ж")){
+                model.addAttribute("SexError", 1);
+                initActiveDishes(model);
+            }
             return "admin/user/newUserProperty";
         }
-        System.out.println(userProperties);
-        System.out.println(userProperties.getUserId());
+        //TODO:sex check
+        /*if(!userProperties.getSex().equalsIgnoreCase("м") || !userProperties.getSex().equalsIgnoreCase("ж")){
+            model.addAttribute("SexError", 1);
+            initActiveDishes(model);
+            return "admin/user/newUserProperty";
+        }*/
         if(!userPropertiesService.save(userProperties)){
             //model.addAttribute("usernameError", "Username this that login is existing");
             return "admin/user/newUserProperty";
         }
-        //TODO: make try catch
+
         return "redirect:/admin/users/all";
     }
 
@@ -234,7 +240,7 @@ public class MainAdminController {
             // userw = userWorktimeService.getUserWorkTime(Integer.parseInt(id));
             user.setUserWorktime(userw);
             userw.setUserok(user);
-            userService.save(user);
+            userService.forceSave(user);
         }
 
         return "redirect:/admin/time_manager";

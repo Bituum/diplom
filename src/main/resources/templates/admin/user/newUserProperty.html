@@ -8,7 +8,7 @@
 </head>
 <body>
     <div th:replace="fragments/header :: headerFragment"></div>
-    <form th:action="@{/admin/users/properties/edit/{id}(id=${pid})}" th:object="${newPropertyForm}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/admin/users/properties/edit/{id}(id=${pid})}" th:object="${newPropertyForm}" method="POST">
         <div class="form-group">
             <div class="input-group mb-3">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Вперед</button>
@@ -17,9 +17,19 @@
                 <input type="text" class="form-control" placeholder="Surname" aria-label="Surname" th:field="*{surname}">
                 <input type="text" class="form-control" placeholder="Salary" aria-label="Salary" th:field="*{salary}">
                 <input type="text" class="form-control" placeholder="Sex" aria-label="Sex" th:field="*{sex}">
-                <input th:if="${pid} > 0" style="" type="text" class="form-control" placeholder="Name" aria-label="Name" id="userId" name="userId" th:value="${pid}">
-                <input th:if="${pid} == 0" style="display: none" type="text" class="form-control" placeholder="Name" aria-label="Name"  th:value="${pid}">
+                <input  style="display: none" type="text" class="form-control" placeholder="Name" aria-label="Name" id="userId" name="userId" th:value="${pid}">
+                <input  style="display: none" type="text" class="form-control" placeholder="Name" aria-label="Name"  th:value="${pid}">
             </div>
+        </div>
+        <div class="form-group">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" role="alert"></div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('secondName')}" th:errors="*{secondName}" role="alert"></div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" role="alert"></div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" role="alert"></div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" role="alert"></div>
+        </div>
+        <div class="container">
+            <div th:if="${SexError} == 1" class="alert alert-danger" role="alert">Введен неверный пол!</div>
         </div>
     </form>
 </body>

@@ -36,7 +36,7 @@ public class AOController {
             dish.setIsActive(false);
             dishesService.save(dish);
             if(dishesService.getAllDishesEntities().stream().allMatch(x -> x.getOrdered() == 0)){
-                return "redirect:/";
+                return "redirect:/user/";
             }
         }
         dishesService.save(dish);

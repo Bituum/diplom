@@ -25,14 +25,14 @@ public class AdminActiveOrderController {
         model.addAttribute("activeDish", InitActiveDishes.initActiveButton());
     }
 
-    @GetMapping("admin/active_orders")
+    @GetMapping("/active_orders")
     public String showAllActiveOrders(Model model){
         model.addAttribute("orderedDishes", dishesService.getAllDishesEntities());
         initActiveDishes(model);
         return "/admin/special/activeOrders";
     }
 
-    @PostMapping("admin/active_orders/clear/{id}")
+    @PostMapping("/active_orders/clear/{id}")
     public String clearActiveDish(@PathVariable("id") int id){
         DishesEntity dish = dishesService.getDishesEntity(id);
         dish.reduceOrderedCounter();

@@ -6,29 +6,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body id="starter">
+<body style="background-color: #212529">
     <div th:replace="fragments/specialHeader :: headerFragment"></div>
-    <div class="login_panel">
-        <a type="button" class="btn btn-light btn-lg" th:href="@{/login}">Авторизация</a>
-        <a type="button" class="btn btn-light btn-lg" th:href="@{/registration}">Регистрация</a>
-    </div>
-    <!--<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item">
-                <img src="http://1tmn.ru/wp-content/uploads/2019/08/uzhin_25.09.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
+    <div class="mx-auto" style="width:400px;">
+        <div class="btn-group-vertical">
+            <a type="button" class="btn btn-light btn-lg mt-5" th:href="@{/login}">Авторизация</a>
+            <img src="https://i.gifer.com/yH.gif" alt="">
+            <a type="button" class="btn btn-light btn-lg " th:href="@{/registration}">Регистрация</a>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>-->
+    </div>
 </body>
 </html>

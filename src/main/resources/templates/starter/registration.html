@@ -23,10 +23,9 @@
             <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Создать</button>
         </div>
         <div class="form-group">
-
             <div class="alert alert-danger" th:if="${#fields.hasErrors('login')}" th:errors="*{login}" role="alert">Login Error</div>
             <div class="alert alert-danger" th:if="${#fields.hasErrors('passwd')}" th:errors="*{passwd}" role="alert">Password Error</div>
-
+            <div class="alert alert-danger" th:if="${usernameNotFound} == 1" role="alert">Данный пользователь уже существует!</div>
         </div>
     </form>
 </body>

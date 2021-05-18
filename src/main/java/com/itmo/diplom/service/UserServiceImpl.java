@@ -29,12 +29,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(UserEntity user) {
+        if(checkLogin(user.getLogin())){
+            throw new IllegalArgumentException("Username is already exist");
+        }
         user.setPasswd(bCryptPasswordEncoder.encode(user.getPasswd()));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roleRepository.getOne(1));
         user.setRoles(roleSet);
         userRepository.save(user);
         return true;
+    }
+
+    public void forceSave(UserEntity user){
+        user.setPasswd(bCryptPasswordEncoder.encode(user.getPasswd()));
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(roleRepository.getOne(1));
+        user.setRoles(roleSet);
+        userRepository.save(user);
     }
 
     @Override
@@ -60,5 +71,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByLogin(login).orElseThrow(
                 IllegalArgumentException::new
         );
+    }
+
+    public boolean checkLogin(String login){
+        Optional<UserEntity> user = userRepository.findByLogin(login);
+        return user.isPresent();
     }
 }

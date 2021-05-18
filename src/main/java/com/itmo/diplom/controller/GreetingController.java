@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
+@RequestMapping("/user")
 public class GreetingController {
     private static Logger logger = Logger.getLogger(AdminDishesController.class.getName());
 
@@ -57,8 +58,7 @@ public class GreetingController {
             initActiveDishes(model);
             return "regular/greeting";
         }
-
-        return "redirect:/";
+        return "redirect:/user/";
     }
 
 }

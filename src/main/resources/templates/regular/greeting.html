@@ -36,9 +36,8 @@
                 </div>
             </td>-->
             <td>
-                <div th:if="${productError} == 1" class="alert alert-primary" role="alert"></div>
-                <form th:method="POST" th:action="@{/make_order/{id}(id=${dish.id})}">
-                    <button type="submit" class="btn btn-outline-success">Добавить</button>
+                <form th:method="POST" th:action="@{/user/make_order/{id}(id=${dish.id})}">
+                    <button type="submit" class="btn btn-outline-success">Заказать</button>
                 </form>
             </td>
             <td>

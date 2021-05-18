@@ -4,6 +4,7 @@ package com.itmo.diplom.controller;
 import com.itmo.diplom.entity.UserEntity;
 import com.itmo.diplom.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,12 +33,13 @@ public class RegistrationController {
         if(result.hasErrors()){
             return "starter/registration";
         }
-        if(!userService.save(userForm)){
-            //model.addAttribute("usernameError", "Username this that login is existing");
+        try{
+            userService.save(userForm);
+        }catch (IllegalArgumentException usernameNotFoundException){
+            model.addAttribute("usernameNotFound", 1);
             return "starter/registration";
         }
         return "redirect:/";
-
     }
 
 

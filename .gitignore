@@ -61,6 +61,9 @@ cmake-build-*/
 # IntelliJ
 out/
 
+#UML diagrams
+*.plantuml
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -431,4 +434,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+
+
+
+
 
