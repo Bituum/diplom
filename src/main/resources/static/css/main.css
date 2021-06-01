@@ -1,0 +1,127 @@
+/* cyrillic */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu5mxKOzY.woff2) format('woff2');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+*{
+    font-family: 'Roboto', serif;
+}
+
+body{
+    background-color: #FFFCF0;
+}
+
+#deleteButton{
+    top: 5%;
+    float: right;
+    position: relative;
+    margin-right: 20px;
+}
+
+#editButton{
+    top: 5%;
+    float: right;
+    position: relative;
+    margin-right: 10px;
+}
+
+.login_panel{
+    margin-left: 36%;
+}
+
+#starter{
+    background-color: #212529;
+}
+
+#sback{
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.button_class {
+    width:150px;
+    padding:5px 7px;
+    display: block;
+}
+
+.link_class {
+    width:100%;
+    height:100%;
+}
+
+.form-group{
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+#button-addon1{
+    width: 100%;
+}
+
+#errorDIV{
+    position: absolute;
+    width: 100%;
+    background-color: #212529;
+}
+
+#submitMultiple{
+    width: 100%;
+    margin-left: 5%;
+    padding-left: 10%;
+}
+
+.inline{
+    margin-left: 30%;
+    float: left;
+    clear: both;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+.work-time{
+    position: absolute;
+    bottom: 0;
+}
+.container-fluid{
+    position: absolute;
+    bottom: 0;
+}
+
+.timer{
+    margin:auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+#active-orders1{
+    position: absolute;
+    top: 20%;
+    border: 1px solid;
+    border-radius: 50%;
+    background-color: #FFC000;
+    text-align: center;
+    line-height: 10px;
+    display: inline-block;
+    color: black;
+}
+
+#active-orders2{
+    position: absolute;
+    top: 20%;
+    border-radius: 50%;
+    background-color: #FFC000;
+    text-align: center;
+    line-height: 10px;
+    display: inline-block;
+    color: black;
+}
+
+.btn-group-vertical{
+    border-radius: 0 !important;
+}
