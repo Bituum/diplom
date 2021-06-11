@@ -40,7 +40,8 @@ public class ProductsServiceImpl implements ProductsService{
 
     public List<ProductsEntity> findProductWithFewAmount(List<ProductsEntity> list){
         return list
-                .stream().filter(Objects::nonNull)
+                .stream()
+                .filter(amount -> Objects.nonNull(amount.getProductProperties()))
                 .map((entry) -> {
                     ProductPropertiesEntity  properties = entry.getProductProperties();
                     if(properties.getAmount() <= 80){

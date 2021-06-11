@@ -17,8 +17,8 @@
     <form th:action="@{/registration}" th:object="${userForm}" method="POST">
         <div class="form-group">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" th:field="*{login}">
-                <input type="text" class="form-control" placeholder="Password" aria-label="Password" th:field="*{passwd}">
+                <input type="text" class="form-control" placeholder="Username" aria-label="Юзернейм" th:field="*{login}">
+                <input type="text" class="form-control" placeholder="Password" aria-label="Пароль" th:field="*{passwd}">
             </div>
             <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Создать</button>
         </div>

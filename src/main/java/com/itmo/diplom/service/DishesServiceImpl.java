@@ -24,6 +24,9 @@ public class DishesServiceImpl implements DishesService {
     private ProductsRepository productsRepository;
 
     @Autowired
+    private ProductPropertiesServiceImpl propertiesService;
+
+    @Autowired
     private ProductsServiceImpl productsService;
 
     private static Logger logger = Logger.getLogger(DishesServiceImpl.class.getName());
@@ -74,14 +77,12 @@ public class DishesServiceImpl implements DishesService {
                     if (amountOfProduct == 0) {
                         return false;
                     }
+
                 }
+                l.getProductProperties().setAmount(amountOfProduct);
                 counterCounterOrder++;
             }
             dish.setIsActive(true);
-
-            for (ProductsEntity l : list) {
-                l.getProductProperties().setAmount(amountOfProduct);
-            }
 
             dishesRepository.save(dish);
             return true;
