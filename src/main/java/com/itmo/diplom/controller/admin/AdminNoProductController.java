@@ -5,6 +5,7 @@ import com.itmo.diplom.service.DishesServiceImpl;
 import com.itmo.diplom.service.ProductsServiceImpl;
 import com.itmo.diplom.util.InitActiveDishes;
 import com.sun.mail.util.LineInputStream;
+import org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class AdminNoProductController {
     @GetMapping("admin/few_products")
     public String showAllNoProduct(Model model) {
         List<ProductsEntity> list = productsService
-                .findProductWithFewAmount(productsService.getAllProductsEntities());
+                .findProductWithFewAmount(productsService.getAllProductsEntities().stream().filter(Objects::nonNull).collect(Collectors.toList()));
 
         model.addAttribute("productsForm", productsService.getSpecificProducts(list.stream()
                 .filter(Objects::nonNull)
